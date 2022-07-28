@@ -462,7 +462,7 @@ if (count($arResult["ERRORS"]) > 0){
                                <option class="engcat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
-                    <select name="UF_CAT1_SELECT" class="select selectcat hidden">
+                    <select name="UF_CAT1_SELECT" class="select hidden">
                         <?foreach($CATSELECT as $k => $v):?>
                             <option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
@@ -577,7 +577,7 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <input type="checkbox" class="checkbox" id="id13">
                     <label class="fullwidth rus" for="id13">Согласен на обработку своих персональных данных в соответствии с <a href="/upload/privacy_policy.pdf" target="_blank">Политикой конфиденциальности</a>.</label>
-                    <label class="fullwidth eng hidden" for="id13">I agree to the processing of my personal data in accordance with the <a href="/upload/privacy_policy.pdf" target="_blank">Privacy Policy</a> and the <a href="/upload/privacy_policy_Tatarstan.pdf" target="_blank">Decision of the Cabinet of Ministers of the Republic of Tatarstan</a></label><br><br>
+                    <label class="fullwidth eng hidden" for="id13">I agree to the processing of my personal data in accordance with the <a href="/upload/privacy_policy.pdf" target="_blank">Privacy Policy</a>.</label><br><br>
                     <input id="UF_STATUS" name='UF_STATUS' type="hidden" class="text text-small" value="39" />
                 </div>
                 <div class="submit-wrap row">
