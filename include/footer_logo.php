@@ -1,0 +1,1 @@
+<a href="/"><img src="<?=SITE_TEMPLATE_PATH?>/images/footer_logo_2022.png"></a>

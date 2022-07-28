@@ -1,0 +1,27 @@
+.program__date {
+	font-size: 1.1em;
+	font-weight: bold;
+	text-align: center;
+}
+
+.program__date {
+	margin-top: 15px;
+}
+
+.program__time {
+	font-weight: bold;
+}
+
+* + .program__time {
+	margin-top: 15px;
+}
+
+.program__item label.option-checkbox__label {
+	display: inline;
+	color: #000000;
+	vertical-align: top;
+}
+
+.program__bottom {
+	margin-top: 15px;
+}

@@ -1,0 +1,15 @@
+.blazons {
+	height: 60px;
+}
+
+.blazons__item {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 15px;
+	height: 100%;
+}
+
+.blazons__item-image {
+	height: 100%;
+	border: none;
+}
