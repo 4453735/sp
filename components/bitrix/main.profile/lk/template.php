@@ -60,6 +60,11 @@ CModule::IncludeModule("iblock");
 $CATEGORY1 = array();
 $COUNTRY_ARRAY_RU = array();
 $SUBJECT_ARRAY = array();
+$CATEGORY_RUS = array();
+$CATEGORY_ENG = array();
+$TRANSPORT_RUS = array();
+$TRANSPORT_ENG = array();
+
 
 global $USER;
 $arFilter = array("ID" => $USER->GetID());
@@ -75,6 +80,25 @@ if ($res = $arRes->Fetch()) {
     }
 }
 
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$CATEGORY_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $CATEGORY_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
 
 $res = CIBlockElement::GetList(array("NAME" => "ASC"),array("IBLOCK_ID" => 3), false, false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
@@ -126,11 +150,6 @@ if($_POST['DATE_OUT']){
 ?>
 <ul class="side-nav">
 	<li class="active"><a data-element-id="item1" href="javascript:void(0)"><span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Личные данные</span><span class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Personal data</span></a></li>
-<!--	<li><a data-element-id="item2" href="javascript:void(0)">Проживание</a></li>-->
-<!--	<li><a data-element-id="item3" href="javascript:void(0)">Детали перелета</a></li>-->
-<!--	<li><a data-element-id="item4" href="javascript:void(0)">Проживание</a></li>-->
-	<?php /* <li><a data-element-id="item5" href="javascript:void(0)">Информация по Форуму</a></li> */?>
-	<?php /* <li><a data-element-id="item6" href="javascript:void(0)">Деловая программа Форума</a></li> */?>
 	<?if (array_key_exists('mospan', $_GET)):?>
 	<li><a data-element-id="item7" href="javascript:void(0)">Спортивные мероприятия</a></li>
 	<?endif?>
@@ -217,10 +236,13 @@ if($_POST['DATE_OUT']){
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Category:</dt>
                     <dd><span><?=$arResult['arUser']['UF_CAT1']?></span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_CAT1" class="select-large">
+                        <select name="UF_CAT1" class="select-large selectcat">
 							<option value="<?=$arResult['arUser']['UF_CAT1']?>"><?=$arResult['arUser']['UF_CAT1']?></option>
-							<?foreach($CATEGORY1 as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <?foreach($CATEGORY_RUS as $k => $v):?>
+								<option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+                            <?foreach($CATEGORY_ENG as $k => $v):?>
+                               <option class="engcat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
                 </span>
@@ -279,10 +301,13 @@ if($_POST['DATE_OUT']){
                             <?=$arResult['arUser']['UF_TRANSPORT']?>
                         </span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_TRANSPORT" class="select-large">
+                        <select name="UF_TRANSPORT" class="select-large selecttransport">
 							<option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
-							<?foreach($TRANSPORT as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?foreach($TRANSPORT_RUS as $k => $v):?>
+                                <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <?endforeach;?>
+                            <?foreach($TRANSPORT_ENG as $k => $v):?>
+                                <option class="engtr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
                 </span>
@@ -351,44 +376,6 @@ if($_POST['DATE_OUT']){
                 </span>
                     </dd>
                 </dl>
-                <h3></h3>
-                <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации от Covid-19</h3>
-                <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Covid-19 vaccination status</h3>
-                <dl class="personal-info">
-                    <dd class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
-                        Для получения аккредитационного бейджа при себе необходимо иметь оригинал паспорта и справку об отрицательном ПЦР-тесте сроком действия не более 72 часов.
-                    </dd>
-                    <dd class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">
-                        To obtain an accreditation badge, you must have an original passport and a negative PCR test certificate valid for no more than 72 hours.
-                    </dd>
-                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации:</dt>
-                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Vaccine Status:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_VACCINE']?></span>
-                        <span class="hidden" style="width:240px">
-                <select name="UF_VACCINE" class="select-large vaccine">
-                        <option value="<?=$arResult['arUser']['UF_VACCINE']?>"><?=$arResult['arUser']['UF_VACCINE']?></option>
-                        <option class="engvac" value="Not vaccinated">Not vaccinated</option>
-                        <option class="engvac" value="Scheduled">Scheduled</option>
-                        <option class="engvac" value="1st Dose done">1st Dose done</option>
-                        <option class="engvac" value="Completed Both Dose">Completed Both Dose</option>
-                        <option class="rusvac" value="Не вакцинирован">Не вакцинирован</option>
-                        <option class="rusvac" value="Запланирована">Запланирована</option>
-                        <option class="rusvac" value="Первый этап вакцинации пройден">Первый этап вакцинации пройден</option>
-                        <option class="rusvac" value="Вакцинирован">Вакцинирован</option>
-                        <option class="rusvac" value="Справка о медицинском отводе от прививки">Справка о медицинском отводе от прививки</option>
-                    </select>
-            </span>
-                    </dd>
-                    <div class="scan" style="display: none">
-                        <dt>Документ о вакцинации</dt>
-                        <dd><input type="file" name="UF_PASSPORT_SCAN" /></dd>
-                    </div>
-                    <?if($arResult['arUser']['UF_PASSPORT_SCAN']):?>
-                        <dt>Документ о вакцинации</dt>
-                        <dd>Документ о вакцинации загружен</dd>
-                    <?endif?>
-                </dl>
-<!--                <input type="submit" class="submit hidden" name="save" value="--><?//=(($arResult["ID"]>0) ? GetMessage("MAIN_SAVE") : GetMessage("MAIN_ADD"))?><!--">-->
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
                     <input type="submit" class="submit hidden" name="save" value="Сохранить изменения">
                 </span>
@@ -1001,14 +988,22 @@ if($_POST['DATE_OUT']){
     $(document).ready(function(){
         let cacheDomRuVac = $('.rusvac');
         let cacheDomEnVac = $('.engvac');
+        let cacheDomRuCat = $('.ruscat');
+        let cacheDomEnCat = $('.engcat');
+        let cacheDomRuTr = $('.rustr');
+        let cacheDomEnTr = $('.engtr');
         let rusHidden = "<?=$arResult['arUser']['UF_RUS_LANG']?>";
         let engHidden = "<?=$arResult['arUser']['UF_ENG_LANG']?>";
 
         if(rusHidden == "hidden") {
             $('.rusvac').remove();
+            $('.ruscat').remove();
+            $('.rustr').remove();
         }
         if(engHidden == "hidden") {
             $('.engvac').remove();
+            $('.engcat').remove();
+            $('.engtr').remove();
         }
 
         $('#enlang').click(function(){
@@ -1016,6 +1011,10 @@ if($_POST['DATE_OUT']){
             $('.eng').removeClass('hidden');
             cacheDomRuVac.remove();
             $('.vaccine').append(cacheDomEnVac);
+            cacheDomRuCat.remove();
+            $('.selectcat').append(cacheDomEnCat);
+            cacheDomRuTr.remove();
+            $('.selecttransport').append(cacheDomEnTr);
         });
 
         $('#rulang').click(function(){
@@ -1023,6 +1022,10 @@ if($_POST['DATE_OUT']){
             $('.rus').removeClass('hidden');
             cacheDomEnVac.remove();
             $('.vaccine').append(cacheDomRuVac);
+            cacheDomEnCat.remove();
+            $('.selectcat').append(cacheDomRuCat);
+            cacheDomEnTr.remove();
+            $('.selecttransport').append(cacheDomRuTr);
         });
     });
 

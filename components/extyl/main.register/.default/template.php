@@ -38,6 +38,18 @@ $SUBJECT_ARRAY = array();
 $CATEGORY_RUS = array();
 $CATEGORY_ENG = array();
 $TRANSPORT = array();
+$TRANSPORT_RUS = array();
+$TRANSPORT_ENG = array();
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
 
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
@@ -583,10 +595,13 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label for="id6" class="rus">Вид транспорта</label>
                     <label for="id6" class="eng hidden">Type of transport</label>
-                    <select name="UF_TRANSPORT" class="select-large">
+                    <select name="UF_TRANSPORT" class="select-large selecttransport">
                         <option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
-                        <?foreach($TRANSPORT as $k => $v):?>
-                            <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?foreach($TRANSPORT_RUS as $k => $v):?>
+                            <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+                        <?foreach($TRANSPORT_ENG as $k => $v):?>
+                            <option class="engtr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
 				    </select>
                 </div>
@@ -660,9 +675,12 @@ if (count($arResult["ERRORS"]) > 0){
         let cacheDomEnVac = $('.engvac');
         let cacheRusErr = $('.ruserr');
         let cacheEngErr = $('.engerr');
+        let cacheDomRuTr = $('.rustr');
+        let cacheDomEnTr = $('.engtr');
         $('.engcat').remove();
         $('.engcontry').remove();
         $('.engvac').remove();
+        $('.engtr').remove();
         $('#enlang').click(function(){
             cacheDomRuCat.remove();
             $('.selectcat').append(cacheDomEnCat);
@@ -670,6 +688,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selectcountry').append(cacheDomEnContry);
             cacheDomRuVac.remove();
             $('.vaccine').append(cacheDomEnVac);
+            cacheDomRuTr.remove();
+            $('.selecttransport').append(cacheDomEnTr);
         });
         $('#rulang').click(function(){
             cacheDomEnCat.remove();
@@ -678,6 +698,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selectcountry').append(cacheDomRuContry);
             cacheDomEnVac.remove();
             $('.vaccine').append(cacheDomRuVac);
+            cacheDomEnTr.remove();
+            $('.selecttransport').append(cacheDomRuTr);
         });
     });
 
