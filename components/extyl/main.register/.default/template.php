@@ -60,16 +60,19 @@ while($ar_res = $res -> GetNext()){
     $COUNTRY_ARRAY_EN[$ar_res['ID']] = $ar_res['NAME'];
 }
 
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $HOTEL[$ar_res['ID']] = $ar_res['NAME'];
+}
 
 $res = CIBlockElement::GetList(array("NAME" => "ASC"),array("IBLOCK_ID" => 3), false, false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
 	$SUBJECT_ARRAY[] = $ar_res['NAME'];
 }
-//pr($SUBJECT_ARRAY);
 
-$res = CIBlockElement::GetList(array(),array("IBLOCK_ID" => 5), false, false, array('ID','NAME'));
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
-	$TRANSPORT[] = $ar_res['NAME'];
+    $TRANSPORT[$ar_res['ID']] = $ar_res['NAME'];
 }
 
 //$rsUsers = CUser::GetList($by, $order, array("SELECT" => array("UF_CAT1_SELECT")));
@@ -545,34 +548,49 @@ if (count($arResult["ERRORS"]) > 0){
 
                         <?if(user_browser($_SERVER['HTTP_USER_AGENT']) != "IE 8.0"):?>
                             <input type="hidden"  name="file" value="" />
-<!--                            <button id="btn-start-camera" class="btn-photo">Сделать фото с веб-камеры</button>-->
                         <?else:?>
                             <input type="file" name="REGISTER_FILES_PERSONAL_PHOTO" />
                         <?endif?>
                     </div>
                 </div>
-<!--                <div class="row">-->
-<!--                    <label for="id19" class="rus">Статус о вакцинации от Covid-19</label>-->
-<!--                    <label for="id19" class="eng hidden">Vaccine Status</label>-->
-<!--                    <select name="UF_VACCINE" class="select-large vaccine">-->
-<!--                        <option class="engvac" value="Not vaccinated">Not vaccinated</option>-->
-<!--                        <option class="engvac" value="Scheduled">Scheduled</option>-->
-<!--                        <option class="engvac" value="1st Dose done">1st Dose done</option>-->
-<!--                        <option class="engvac" value="Completed Both Dose">Completed Both Dose</option>-->
-<!--                        <option class="rusvac" value="Не вакцинирован">Не вакцинирован</option>-->
-<!--                        <option class="rusvac" value="Запланирована">Запланирована</option>-->
-<!--                        <option class="rusvac" value="Первый этап вакцинации пройден">Первый этап вакцинации пройден</option>-->
-<!--                        <option class="rusvac" value="Вакцинирован">Вакцинирован</option>-->
-<!--                        <option class="rusvac" value="Справка о медицинском отводе от прививки">Справка о медицинском отводе от прививки</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <div class="row scan" style="display: none">-->
-<!--                    <label class="rus">Документ о вакцинации</label>-->
-<!--                    <label class="eng hidden">Attach the file</label>-->
-<!--                    <input type="file" name="UF_PASSPORT_SCAN" />-->
-<!--                </div>-->
                 <input type="hidden" class="ruslangfield" name="UF_RUS_LANG" type="text">
                 <input type="hidden" class="englangfield" name="UF_ENG_LANG" type="text" value="hidden">
+                <h3 class="info-block rus">Проживание</h3>
+                <h3 class="info-block eng hidden">Accommodation</h3>
+                <p class="rus">Можно заполнить позднее в личном кабинете.</p>
+                <p class="eng hidden">You can fill in later in your personal profile.</p>
+                <br>
+                <div class="row">
+                    <label class="rus">Гостиница</label>
+                    <label class="eng hidden">Hotel</label>
+                    <select name="UF_LIVING_PLACE" class="select-large">
+                        <option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
+                            <?foreach($HOTEL as $k => $v):?>
+                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <?endforeach;?>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Дата прибытия</label>
+                    <label for="id6" class="eng hidden">Arrival date</label>
+                    <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Дата отъезда</label>
+                    <label for="id6" class="eng hidden">Departure date</label>
+                    <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['arUser']['UF_DATE_OUT']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Вид транспорта</label>
+                    <label for="id6" class="eng hidden">Type of transport</label>
+                    <select name="UF_TRANSPORT" class="select-large">
+                        <option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
+                        <?foreach($TRANSPORT as $k => $v):?>
+                            <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+				    </select>
+                </div>
+
 
                 <div class="row">
                     <input type="checkbox" class="checkbox" id="id13">
@@ -581,7 +599,6 @@ if (count($arResult["ERRORS"]) > 0){
                     <input id="UF_STATUS" name='UF_STATUS' type="hidden" class="text text-small" value="39" />
                 </div>
                 <div class="submit-wrap row">
-                    <!--					<input type="submit" class="submit halfwidth go-step3" value="Назад">-->
                     <input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check rus" value="Отправить заявку" disabled="disabled" />
                     <input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check eng hidden" value="Register" disabled="disabled" />
                     <input type="hidden" name="register_submit_button" class="submit" value="Завершить" />
@@ -592,36 +609,6 @@ if (count($arResult["ERRORS"]) > 0){
 				<div class="divider"></div>
 			</div>
 		</div>
-<!--		<div id="step4" class="step">-->
-<!--			<div class="form-box">-->
-<!--                <div class="row">-->
-<!--                        <input type="checkbox" class="checkbox" id="id13">-->
-<!--                        <label class="fullwidth" for="id13">Согласен на обработку своих персональных данных</label><br><br>-->
-<!--                        <div style="border: 1px solid #cfcfcf; border-radius: 2px; height: 110px; overflow: auto; padding: 0.6em 0.9em;">-->
-<!--                            В соответствии со статьей 9 Федерального закона от 27 июля 2006 года N 152-ФЗ "О персональных данных" даю своё согласие АНО «Форум «Спортивная Держава» (далее – Организатор) на обработку моих персональных данных Организатором в целях обеспечения безопасности для участия в Международном спортивном форуме «Россия – спортивная держава» (далее – Форум). <br><br>-->
-<!--                            Я согласен предоставить информацию, относящуюся к моей личности: фамилия, имя, отчество, дата рождения, контактный телефон, адрес e-mail, паспортные данные и место регистрации уполномоченным специализированным учреждениям безопасности РФ на период подготовки и проведения Форума и подтверждаю, что давая такое согласие, я действую своей волей и в своем интересе. <br><br>-->
-<!--                            Я уведомлен и понимаю, что под обработкой персональных данных подразумевается сбор, систематизация, накопление, хранение, уточнение (обновление, изменение), использование, распространение, уничтожение и любые другие действия в соответствии с действующим законодательством. Обработка данных может осуществляться с использованием средств автоматизации, так и без их использования (при неавтоматической обработке).-->
-<!--                        </div>-->
-<!--                </div>-->
-                <!--				<div class="row">-->
-                <!--					<div class="right-column">-->
-                <!--                        <input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check" value="Завершить" disabled='disabled' />-->
-                <!--						<input type="submit" class="submit fullwidth go-step2" value="Далее" disabled='disabled' />-->
-                <!--					</div>-->
-                <!--				</div>-->
-<!--                <div class="row">-->
-<!--                    <div class="right-column">-->
-<!--                        <span class="btn-note"></span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--				<div class="submit-wrap row">-->
-<!--					<input type="submit" class="submit halfwidth go-step3" value="Назад">-->
-<!--					<input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check" value="Отправить заявку" disabled="disabled" />-->
-<!--					<input type="hidden" name="register_submit_button" class="submit" value="Завершить" />-->
-<!--					<span class="btn-note"></span>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
 	</fieldset>
 </form>
 
@@ -817,7 +804,9 @@ if (count($arResult["ERRORS"]) > 0){
 	$(document).ready(function () {
 		$("#show_popup").click();
 		$('#id23').mask("99.99.9999");
-		//$('#id11').mask("+99999999999");
+        $('#date').mask("99.99.9999");
+        $('#date2').mask("99.99.9999");
+		$('#id11').mask("+7 (999) 999-99-99");
         // let middle = $('#id11').val();
 		// $('#PERSONAL_MOBILE').val($('[name = tmp_mobile]').val());
         //$('#PERSONAL_MOBILE').val($('#id11').val());
@@ -844,6 +833,12 @@ if (count($arResult["ERRORS"]) > 0){
         var err_text_en = 'You have not filled in the fields:<br/>';
 		var birthday = $('[name=d]').val() + '.' + $('[name=m]').val() + '.' + $('[name=y]').val();
 		$('#PERSONAL_BIRTHDAY').val(birthday);
+        if($('[name=UF_DATE_IN]').val() == ''){
+			$('[name=UF_DATE_IN]').val('00.00.0000');
+		}
+        if($('[name=UF_DATE_OUT]').val() == ''){
+			$('[name=UF_DATE_OUT]').val('00.00.0000');
+		}
 		$('#step1 [type=text]').each(function(i){
 			if($(this).val()=='' || $(this).val() == $(this).attr('err')){
 				err++;
