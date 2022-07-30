@@ -40,6 +40,8 @@ $CATEGORY_ENG = array();
 $TRANSPORT = array();
 $TRANSPORT_RUS = array();
 $TRANSPORT_ENG = array();
+$HOTEL_RUS = array();
+$HOTEL_ENG = array();
 
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
@@ -72,9 +74,14 @@ while($ar_res = $res -> GetNext()){
     $COUNTRY_ARRAY_EN[$ar_res['ID']] = $ar_res['NAME'];
 }
 
-$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'SECTION_ID' => false), false, array('ID','NAME'));
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
-    $HOTEL[$ar_res['ID']] = $ar_res['NAME'];
+    $HOTEL_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $HOTEL_ENG[$ar_res['ID']] = $ar_res['NAME'];
 }
 
 $res = CIBlockElement::GetList(array("NAME" => "ASC"),array("IBLOCK_ID" => 3), false, false, array('ID','NAME'));
@@ -87,15 +94,6 @@ while($ar_res = $res -> GetNext()){
     $TRANSPORT[$ar_res['ID']] = $ar_res['NAME'];
 }
 
-//$rsUsers = CUser::GetList($by, $order, array("SELECT" => array("UF_CAT1_SELECT")));
-//while ($rsUsers->GetNext())
-//{
-//    $rsGender = CUserFieldEnum::GetList(array(), array("ID" => $arUser["UF_CAT1_SELECT"]));
-//    if ($arCat = $rsGender->GetNext())
-//        $CATSELECT[] = $arCat["VALUE"];
-//}
-
-//Значения каталога
 
 
 $rsUser = CUser::GetList($by, $order,
@@ -171,32 +169,6 @@ if (count($arResult["ERRORS"]) > 0){
 	});
 
 
-
-    // $('#user_photo').faceDetection({
-    //     complete: function (faces) {
-    //         console.log(faces);
-    //         console.log(faces[0]);
-    //         if (faces[0] == null) {
-    //             alert('На фото нет лица!');
-    //         }
-    //         for (var i = 0; i < faces.length; i++) {
-    //             $('<div>', {
-    //                 'class': 'face',
-    //                 'css': {
-    //                     'position': 'absolute',
-    //                     'left': faces[i].x * faces[i].scaleX + 'px',
-    //                     'top': faces[i].y * faces[i].scaleY + 'px',
-    //                     'width': faces[i].width * faces[i].scaleX + 'px',
-    //                     'height': faces[i].height * faces[i].scaleY + 'px'
-    //                 }
-    //             })
-    //                 .insertAfter(this);
-    //         }
-    //     },
-    //     error: function (code, message) {
-    //         alert('Error: ' + message);
-    //     }
-    // });
 
 
 
@@ -575,11 +547,14 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label class="rus">Гостиница</label>
                     <label class="eng hidden">Hotel</label>
-                    <select name="UF_LIVING_PLACE" class="select-large">
+                    <select name="UF_LIVING_PLACE" class="select-large selecthotel">
                         <option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-                            <?foreach($HOTEL as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
+                        <?foreach($HOTEL_RUS as $k => $v):?>
+                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+                        <?foreach($HOTEL_ENG as $k => $v):?>
+                            <option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
                     </select>
                 </div>
                 <div class="row">
@@ -677,10 +652,13 @@ if (count($arResult["ERRORS"]) > 0){
         let cacheEngErr = $('.engerr');
         let cacheDomRuTr = $('.rustr');
         let cacheDomEnTr = $('.engtr');
+        let cacheDomRuHotel = $('.rushotel');
+        let cacheDomEnHotel = $('.enghotel');
         $('.engcat').remove();
         $('.engcontry').remove();
         $('.engvac').remove();
         $('.engtr').remove();
+        $('.enghotel').remove();
         $('#enlang').click(function(){
             cacheDomRuCat.remove();
             $('.selectcat').append(cacheDomEnCat);
@@ -690,6 +668,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.vaccine').append(cacheDomEnVac);
             cacheDomRuTr.remove();
             $('.selecttransport').append(cacheDomEnTr);
+            cacheDomRuHotel.remove();
+            $('.selecthotel').append(cacheDomEnHotel);
         });
         $('#rulang').click(function(){
             cacheDomEnCat.remove();
@@ -700,6 +680,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.vaccine').append(cacheDomRuVac);
             cacheDomEnTr.remove();
             $('.selecttransport').append(cacheDomRuTr);
+            cacheDomEnHotel.remove();
+            $('.selecthotel').append(cacheDomRuHotel);
         });
     });
 
