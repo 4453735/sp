@@ -546,42 +546,7 @@ if($_POST['DATE_OUT']){
                         <?=$arResult['arUser']['UF_PASSPORT']?>
                     </dd>
                 </dl>
-                <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации от Covid-19</h3>
-                <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Covid-19 vaccination status</h3>
-                <dl class="personal-info">
-                    <dd class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
-                        Для получения аккредитационного бейджа при себе необходимо иметь оригинал паспорта и справку об отрицательном ПЦР-тесте сроком действия не более 72 часов.
-                    </dd>
-                    <dd class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">
-                        To obtain an accreditation badge, you must have an original passport and a negative PCR test certificate valid for no more than 72 hours.
-                    </dd>
-                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации:</dt>
-                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Vaccine Status:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_VACCINE']?></span>
-                        <span class="hidden" style="width:240px">
-                 <select name="UF_VACCINE" class="select-large vaccine">
-                        <option value="<?=$arResult['arUser']['UF_VACCINE']?>"><?=$arResult['arUser']['UF_VACCINE']?></option>
-                        <option class="engvac" value="Not vaccinated">Not vaccinated</option>
-                        <option class="engvac" value="Scheduled">Scheduled</option>
-                        <option class="engvac" value="1st Dose done">1st Dose done</option>
-                        <option class="engvac" value="Completed Both Dose">Completed Both Dose</option>
-                        <option class="rusvac" value="Не вакцинирован">Не вакцинирован</option>
-                        <option class="rusvac" value="Запланирована">Запланирована</option>
-                        <option class="rusvac" value="Первый этап вакцинации пройден">Первый этап вакцинации пройден</option>
-                        <option class="rusvac" value="Вакцинирован">Вакцинирован</option>
-                        <option class="rusvac" value="Справка о медицинском отводе от прививки">Справка о медицинском отводе от прививки</option>
-                    </select>
-            </span>
-                    </dd>
-                    <div class="scan" style="display: none">
-                        <dt>Документ о вакцинации</dt>
-                        <dd><input type="file" name="UF_PASSPORT_SCAN" /></dd>
-                    </div>
-                    <?if($arResult['arUser']['UF_PASSPORT_SCAN']):?>
-                        <dt>Документ о вакцинации</dt>
-                        <dd>Документ о вакцинации загружен</dd>
-                    <?endif?>
-                </dl>
+
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
                     <input type="submit" class="submit hidden" name="save" value="Сохранить изменения">
                 </span>
