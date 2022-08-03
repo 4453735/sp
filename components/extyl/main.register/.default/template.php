@@ -451,7 +451,7 @@ if (count($arResult["ERRORS"]) > 0){
 						</select>
                     <select name="UF_CAT1_SELECT" class="select hidden">
                         <?foreach($CATSELECT as $k => $v):?>
-                            <option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <option class="rus_cat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
                     </select>
                 </div>
