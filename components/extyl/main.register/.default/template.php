@@ -545,6 +545,17 @@ if (count($arResult["ERRORS"]) > 0){
                 <p class="eng hidden">You can fill in later in your personal profile.</p>
                 <br>
                 <div class="row">
+                    <label class="rus">Город прибытия</label>
+                    <label class="eng hidden">Arrival city</label>
+                    <select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+                        <option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
+                        <option class="rusarrcity" value="Кемерово">Кемерово</option>
+                        <option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
+                        <option class="rusarrcity" value="Новосибирск">Новосибирск</option>
+                        <option class="rusarrcity" value="Томск">Томск</option>
+                    </select>
+                </div>
+                <div class="row">
                     <label class="rus">Гостиница</label>
                     <label class="eng hidden">Hotel</label>
                     <select name="UF_LIVING_PLACE" class="select-large selecthotel">

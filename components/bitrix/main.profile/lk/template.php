@@ -269,6 +269,19 @@ if($_POST['DATE_OUT']){
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Проживание</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Accommodation</h3>
                 <dl class="personal-info">
+
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Город прибытия:</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival city:</dt>
+				<dd><span><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></span>
+				<span class="hidden" style="width:240px">
+					<select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+						<option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
+						<option class="rusarrcity" value="Кемерово">Кемерово</option>
+						<option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
+						<option class="rusarrcity" value="Новосибирск">Новосибирск</option>
+						<option class="rusarrcity" value="Томск">Томск</option>
+					</select>
+				</span>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
