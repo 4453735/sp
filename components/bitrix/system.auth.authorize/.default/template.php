@@ -13,8 +13,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 		<?endforeach?>
 		
 		<div class="row">
+			<br>
+			<p>Уважаемые участники, по техническим причинам регистрация на форум временно приостановлена.
+				<br>Благодарим за понимание.</p>
 			<ul class="tabset">
-				<li><span style="font-size:20px"><strong><a href="/register/">Регистрация / Registration</a></strong></li>
+				<!-- <li><span style="font-size:20px"><strong><a href="/register/">Регистрация / Registration</a></strong></li> -->
 
 				<br><p>&nbsp;</p>
 				<li><b>Войти в личный кабинет</b></li>
