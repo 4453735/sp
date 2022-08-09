@@ -439,6 +439,15 @@ if (count($arResult["ERRORS"]) > 0){
 					<input id="PERSONAL_BIRTHDAY" type="hidden" name="REGISTER[PERSONAL_BIRTHDAY]" />
 				</div>
                 <div class="row">
+					<label class="rus">Пол</label>
+                    <label class="eng hidden">Gender</label>
+                    <select name="UF_GENDER" class="select-large selectarrcity">
+                        <option class="rusarrcity" value="Мужской">Мужской</option>
+                        <option class="rusarrcity" value="Женский">Женский</option>
+                        <option value="<?=$arResult['arUser']['UF_GENDER']?>"><?=$arResult['arUser']['UF_GENDER']?></option>
+                    </select>
+				</div>
+                <div class="row">
                         <label id='UF_CAT1' class="rus">Категория участника</label>
                         <label id='UF_CAT1' class="eng hidden">Category</label>
                         <select name="UF_CAT1" class="select selectcat">
@@ -498,10 +507,40 @@ if (count($arResult["ERRORS"]) > 0){
                     <label for="id15">Место проживания</label>
                     <input name='UF_ADDRESS' id="UF_ADDRESS" class="text" type="text" value="<?=$arResult["VALUES"]['UF_ADDRESS']?>" placeholder="" />
                 </div>
+                <div id="UF_BIRTH_PLACE" class="row">
+					<label for="id101" class="rus">Место рождения</label>
+                    <label for="id101" class="eng hidden">Birth place</label>
+					<input name="UF_BIRTH_PLACE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_PLACE']?>" placeholder="Москва" id="id101">
+				</div>
                 <div class="row">
-                    <label for="id15" class="rus">Паспортные данные</label>
+                    <label for="id102" class="rus">Страна рождения</label>
+                    <label for="id102" class="eng hidden">Birth country</label>
+                    <input name="UF_BIRTH_COUNTRY" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_COUNTRY']?>" placeholder="Россия" id="id102">
+				</div>
+                <div class="row">
+                    <label for="id103" class="rus">Гражданство</label>
+                    <label for="id103" class="eng hidden">Citizen</label>
+                    <input name="UF_CITIZEN" type="text" class="text" value="<?=$arResult["VALUES"]['UF_CITIZEN']?>" placeholder="Россия" id="id103">
+				</div>
+                <div class="row">
+                    <label for="id104" class="rus">Тип документа, удостоверяющего личность </label>
+                    <label for="id104" class="eng hidden">Document type</label>
+                    <input name="UF_DOCUMENT_TYPE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_DOCUMENT_TYPE']?>" placeholder="Паспорт РФ" id="id104">
+				</div>
+                <div class="row">
+                    <label for="id15" class="rus">Серия и номер документа, удостоверяющего личность</label>
                     <label for="id15" class="eng hidden">Passport number</label>
-                    <input name='UF_PASSPORT' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASSPORT']?>" placeholder="" />
+                    <input name='UF_PASSPORT' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASSPORT']?>" placeholder="00 00 000000" />
+                </div>
+                <div class="row">
+                    <label for="id105" class="rus">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения</label>
+                    <label for="id105" class="eng hidden">Issuing authority, date of issue and subdivision code</label>
+                    <input name='UF_PASS_PLACE' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASS_PLACE']?>" placeholder="" id="id105"/>
+                </div>
+                <div class="row">
+                    <label for="id106" class="rus">Адрес регистрации по месту жительства</label>
+                    <label for="id106" class="eng hidden">Address of registration at the place of residence</label>
+                    <input name='UF_REG_ADDRESS' class="text" type="text" value="<?=$arResult["VALUES"]['UF_REG_ADDRESS']?>" placeholder="" id="id106"/>
                 </div>
                 <div class="row">
                     <label for="id5" class="rus">Название организации</label>
