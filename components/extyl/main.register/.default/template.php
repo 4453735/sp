@@ -158,6 +158,7 @@ if (count($arResult["ERRORS"]) > 0){
 				//$('#upload_photo').append('<input type="hidden"  name="file" value="' + src + '" />');
 				$('[name=file]').val(src);
 				$('#upload_photo').css('opacity','1.0');
+                // $('#upload_photo').append('.qq-upload-button');
 				release();
 				$('#upload_photo').css('opacity','1.0');
 				jcrop_api.destroy();

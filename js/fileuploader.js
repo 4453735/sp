@@ -634,7 +634,7 @@ qq.extend(qq.FileUploader.prototype, {
                 //e.stopPropagation();
             },
             onLeaveNotDescendants: function(e){
-                qq.removeClass(dropArea, self._classes.dropActive);
+            qq.removeClass(dropArea, self._classes.dropActive);
             },
             onDrop: function(e){
                 if (self._options.hideShowDropArea) {

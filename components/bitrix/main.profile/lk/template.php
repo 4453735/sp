@@ -232,6 +232,18 @@ if($_POST['DATE_OUT']){
                     <input class="text" type="text" name="PERSONAL_BIRTHDAY" value="<?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>">
                 </span>
                     </dd>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Пол:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Gender:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_GENDER']?></span>
+                        <span class="hidden" style="width:240px">
+							<select name="UF_GENDER" class="select-large selectarrcity">
+								<option value="<?=$arResult['arUser']['UF_GENDER']?>"><?=$arResult['arUser']['UF_GENDER']?></option>
+								<option class="rusarrcity" value="Мужской">Мужской</option>
+								<option class="rusarrcity" value="Женский">Женский</option>
+							</select>
+               			 </span>
+                    </dd>
+
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Категория участника:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Category:</dt>
                     <dd><span><?=$arResult['arUser']['UF_CAT1']?></span>
@@ -380,6 +392,42 @@ if($_POST['DATE_OUT']){
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Паспортные данные</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport information</h3>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth place:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_BIRTH_PLACE']?></span>
+                        <span class="hidden" style="width:240px">
+                    		<input class="text" type="text" name="UF_BIRTH_PLACE" value="<?=$arResult['arUser']['UF_BIRTH_PLACE']?>">
+                		</span>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth country:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_BIRTH_COUNTRY']?></span>
+                        <span class="hidden" style="width:240px">
+                    		<input class="text" type="text" name="UF_BIRTH_COUNTRY" value="<?=$arResult['arUser']['UF_BIRTH_COUNTRY']?>">
+                		</span>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гражданство:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Citizen:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_CITIZEN']?></span>
+                        <span class="hidden" style="width:240px">
+                    		<input class="text" type="text" name="UF_CITIZEN" value="<?=$arResult['arUser']['UF_CITIZEN']?>">
+                		</span>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Тип документа, удостоверяющего личность:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Document type:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_DOCUMENT_TYPE']?></span>
+                        <span class="hidden" style="width:240px">
+                    		<input class="text" type="text" name="UF_DOCUMENT_TYPE" value="<?=$arResult['arUser']['UF_DOCUMENT_TYPE']?>">
+                		</span>
+					</dd>
+				</dl>
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Серия и номер паспорта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport number:</dt>
@@ -389,6 +437,24 @@ if($_POST['DATE_OUT']){
                 </span>
                     </dd>
                 </dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Issuing authority, date of issue and subdivision code:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_PASS_PLACE']?></span>
+                        <span class="hidden" style="width:240px">
+                    		<input class="text" type="text" name="UF_PASS_PLACE" value="<?=$arResult['arUser']['UF_PASS_PLACE']?>">
+                		</span>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Адрес регистрации по месту жительства:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Address of registration at the place of residence:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_REG_ADDRESS']?></span>
+                        <span class="hidden" style="width:240px">
+                    		<input class="text" type="text" name="UF_REG_ADDRESS" value="<?=$arResult['arUser']['UF_REG_ADDRESS']?>">
+                		</span>
+					</dd>
+				</dl>
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
                     <input type="submit" class="submit hidden" name="save" value="Сохранить изменения">
                 </span>
@@ -454,6 +520,13 @@ if($_POST['DATE_OUT']){
                     <dd>
                         <?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>
                     </dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Пол:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Gender:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_GENDER']?></span>
+					</dd>
+
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Категория участника:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Category:</dt>
                     <dd>
@@ -553,11 +626,49 @@ if($_POST['DATE_OUT']){
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Паспортные данные</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport information</h3>
                 <dl class="personal-info">
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth place:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_BIRTH_PLACE']?></span>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth country:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_BIRTH_COUNTRY']?></span>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гражданство:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Citizen:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_CITIZEN']?></span>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Тип документа, удостоверяющего личность:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Document type:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_DOCUMENT_TYPE']?></span>
+					</dd>
+
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Серия и номер паспорта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport number:</dt>
                     <dd>
                         <?=$arResult['arUser']['UF_PASSPORT']?>
                     </dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Issuing authority, date of issue and subdivision code:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_PASS_PLACE']?></span>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Адрес регистрации по месту жительства:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Address of registration at the place of residence:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_REG_ADDRESS']?></span>
+					</dd>
+
                 </dl>
 
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
