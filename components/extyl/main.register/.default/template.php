@@ -746,11 +746,11 @@ if (count($arResult["ERRORS"]) > 0){
         });
     });
 
-    $('#UF_CITY').on('input', function(){
-        let UF_CITY = $('#UF_CITY').val();
-        $('#UF_ADDRESS').val( UF_CITY + ', ');
-        elAlias: $('#UF_ADDRESS');
-    });
+    // $('#UF_CITY').on('input', function(){
+    //     let UF_CITY = $('#UF_CITY').val();
+    //     $('#UF_ADDRESS').val( UF_CITY + ', ');
+    //     elAlias: $('#UF_ADDRESS');
+    // });
 
     let undo = $('.rusf')
 

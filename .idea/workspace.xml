@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d3418dd1-ff66-491c-b183-f902ea931b0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/bitrix/system.auth.authorize/.default/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/components/bitrix/system.auth.authorize/.default/template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/extyl/main.register/.default/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/components/extyl/main.register/.default/template.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +49,8 @@
       <workItem from="1659171521602" duration="19000" />
       <workItem from="1659171568063" duration="5361000" />
       <workItem from="1659271528674" duration="1020000" />
-      <workItem from="1659274901523" duration="829000" />
+      <workItem from="1659274901523" duration="2870000" />
+      <workItem from="1660110478797" duration="570000" />
     </task>
     <servers />
   </component>
