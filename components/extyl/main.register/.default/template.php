@@ -752,6 +752,20 @@ if (count($arResult["ERRORS"]) > 0){
     //     elAlias: $('#UF_ADDRESS');
     // });
 
+    // Запрет ввода пробелов в ФИО
+
+    $('body').on('input', '#surname_custom', function(){
+	    this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
+         });
+
+    $('body').on('input', '#name_custom', function(){
+        this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
+    });
+
+    $('body').on('input', '#middle_name_custom', function(){
+        this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
+    });
+
     let undo = $('.rusf')
 
     $('#enlang').click(function(){
@@ -862,6 +876,12 @@ if (count($arResult["ERRORS"]) > 0){
         $('#date').mask("99.99.9999");
         $('#date2').mask("99.99.9999");
 		$('#id11').mask("+7 (999) 999-99-99");
+
+        // $.mask.definitions['A'] = "[A-Za-z]";
+        // $("#surname_custom").mask("AAA");
+
+       
+
         // let middle = $('#id11').val();
 		// $('#PERSONAL_MOBILE').val($('[name = tmp_mobile]').val());
         //$('#PERSONAL_MOBILE').val($('#id11').val());
