@@ -409,7 +409,7 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label for="middle_name_custom" class="rus">Отчество</label>
                     <label for="middle_name_custom" class="eng hidden">Middle name</label>
-                    <input name="" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" id="middle_name_custom">
+                    <input type="text" name="" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" id="middle_name_custom">
                 </div>
                 <input type="hidden" name="UF_FIO" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" err="Иванов Иван Иванович" placeholder = "Иванов Иван Иванович" id="id3">
                 <div class="row rus">
