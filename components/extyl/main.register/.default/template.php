@@ -399,17 +399,17 @@ if (count($arResult["ERRORS"]) > 0){
                     <label for="surname_custom" class="rus ruserr">Фамилия</label>
                     <label for="surname_custom" class="eng hidden engerr">First Name</label>
                     </span>
-                    <input type="text" name="" class="text" value="" id="surname_custom">
+                    <input type="text" name="REGISTER[LAST_NAME]" class="text" value="<?=$arResult["VALUES"]['LAST_NAME']?>" id="surname_custom">
                 </div>
                 <div class="row">
                     <label for="name_custom" class="rus">Имя</label>
                     <label for="name_custom" class="eng hidden">Name</label>
-                    <input type="text" name="" class="text" value="" id="name_custom">
+                    <input type="text" name="REGISTER[NAME]" class="text" value="<?=$arResult["VALUES"]['NAME']?>" id="name_custom">
                 </div>
                 <div class="row">
                     <label for="middle_name_custom" class="rus">Отчество</label>
                     <label for="middle_name_custom" class="eng hidden">Middle name</label>
-                    <input type="text" name="" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" id="middle_name_custom">
+                    <input type="text" name="REGISTER[SECOND_NAME]" class="text" value="<?=$arResult["VALUES"]['SECOND_NAME']?>" id="middle_name_custom">
                 </div>
                 <input type="hidden" name="UF_FIO" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" err="Иванов Иван Иванович" placeholder = "Иванов Иван Иванович" id="id3">
                 <div class="row rus">
@@ -419,39 +419,40 @@ if (count($arResult["ERRORS"]) > 0){
 				<div class="row">
 					<label for="id5" class="rus">Дата рождения</label>
                     <label for="id5" class="eng hidden"> Date of birth</label>
-					<select name="d">
-						<option></option>
-						<?for($i=1;$i<32;$i++):?>
-							<option value="<?if($i < 10)echo '0';?><?=$i?>"><?=$i?></option>
-						<?endfor?>
-					</select>
-					<select name='m'>
-						<option></option>
-						<?for($i=2;$i<14;$i++):?>
-							<option value="<?if($i-1 < 10)echo '0';?><?=$i-1?>"><?=FormatDate("m",  mktime(0, 0, 0, $i  , 0, 2000));?></option>
-						<?endfor?>
-					</select>
-					<select name='y'>
-						<option></option>
-						<?for($i=date('Y');$i>1930;$i--):?>
-							<option value="<?=$i?>"><?=$i?></option>
-						<?endfor?>
-					</select>
-					<input id="PERSONAL_BIRTHDAY" type="hidden" name="REGISTER[PERSONAL_BIRTHDAY]" />
+<!--					<select name="d">-->
+<!--						<option></option>-->
+<!--						--><?//for($i=1;$i<32;$i++):?>
+<!--							<option value="--><?//if($i < 10)echo '0';?><!----><?//=$i?><!--">--><?//=$i?><!--</option>-->
+<!--						--><?//endfor?>
+<!--					</select>-->
+<!--					<select name='m'>-->
+<!--						<option></option>-->
+<!--						--><?//for($i=2;$i<14;$i++):?>
+<!--							<option value="--><?//if($i-1 < 10)echo '0';?><!----><?//=$i-1?><!--">--><?//=FormatDate("m",  mktime(0, 0, 0, $i  , 0, 2000));?><!--</option>-->
+<!--						--><?//endfor?>
+<!--					</select>-->
+<!--					<select name='y'>-->
+<!--						<option></option>-->
+<!--						--><?//for($i=date('Y');$i>1930;$i--):?>
+<!--							<option value="--><?//=$i?><!--">--><?//=$i?><!--</option>-->
+<!--						--><?//endfor?>
+<!--					</select>-->
+					<input id="PERSONAL_BIRTHDAY" type="text" name="REGISTER[PERSONAL_BIRTHDAY]" value="<?=$arResult["VALUES"]['PERSONAL_BIRTHDAY']?>" />
 				</div>
                 <div class="row">
 					<label class="rus">Пол</label>
                     <label class="eng hidden">Gender</label>
-                    <select name="UF_GENDER" class="select-large selectarrcity">
+                    <select name="UF_GENDER" class="select-large selectarrcity" id="gender">
+                        <option value="<?=$arResult['VALUES']['UF_GENDER']?>"><?=$arResult['VALUES']['UF_GENDER']?></option>
                         <option class="rusarrcity" value="Мужской">Мужской</option>
                         <option class="rusarrcity" value="Женский">Женский</option>
-                        <option value="<?=$arResult['arUser']['UF_GENDER']?>"><?=$arResult['arUser']['UF_GENDER']?></option>
                     </select>
 				</div>
                 <div class="row">
                         <label id='UF_CAT1' class="rus">Категория участника</label>
                         <label id='UF_CAT1' class="eng hidden">Category</label>
                         <select name="UF_CAT1" class="select selectcat">
+                            <option value="<?=$arResult['VALUES']['UF_CAT1']?>"><?=$arResult['VALUES']['UF_CAT1']?></option>
 							<?foreach($CATEGORY_RUS as $k => $v):?>
 								<option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
 							<?endforeach;?>
@@ -469,7 +470,7 @@ if (count($arResult["ERRORS"]) > 0){
                     <label for="id11" class="rus">Мобильный телефон</label>
                     <label for="id11" class="eng hidden">Phone</label>
                     <input name='tmp_mobile' type="text" class="text text-small" value="<?=$arResult["VALUES"]['PERSONAL_MOBILE']?>" id="id11" err="+79037147415">
-                    <input id="PERSONAL_MOBILE" name='REGISTER[PERSONAL_MOBILE]' type="hidden" class="text text-small" value="" />
+                    <input id="PERSONAL_MOBILE" name='REGISTER[PERSONAL_MOBILE]' type="hidden" class="text text-small" value="<?=$arResult["VALUES"]['PERSONAL_MOBILE']?>" />
                 </div>
                 <div class="row">
                     <label for="id10" class="rus">Электронная почта</label>
@@ -479,7 +480,8 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label class="rus">Страна</label>
                     <label class="eng hidden">Country</label>
-                    <select name="UF_REG_COUNTRY" class="select-large selectcountry" id="placeholder">
+                    <select name="UF_REG_COUNTRY" class="select-large selectcountry" id="country">
+                        <option value="<?=$arResult['VALUES']['UF_REG_COUNTRY']?>"><?=$arResult['VALUES']['UF_REG_COUNTRY']?></option>
                         <?foreach($COUNTRY_ARRAY as $k => $v):?>
                            <option class="ruscontry" country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
@@ -491,7 +493,7 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row rus region">
                     <label for="id12" class="rus">Регион</label>
                     <select name="UF_REGION" class="select-large">
-                        <option value=""></option>
+                        <option value="<?=$arResult['VALUES']['UF_REGION']?>"><?=$arResult['VALUES']['UF_REGION']?></option>
                         <option value="Москва">Москва</option>
                         <option value="Санкт-Петербург">Санкт-Петербург</option>
                         <?foreach($SUBJECT_ARRAY as $k => $v):?>
@@ -588,7 +590,7 @@ if (count($arResult["ERRORS"]) > 0){
                     <label class="rus">Город прибытия</label>
                     <label class="eng hidden">Arrival city</label>
                     <select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
-                        <option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
+                        <option value="<?=$arResult['VALUES']['UF_ARRIVAL_CITY']?>"><?=$arResult['VALUES']['UF_ARRIVAL_CITY']?></option>
                         <option class="rusarrcity" value="Кемерово">Кемерово</option>
                         <option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
                         <option class="rusarrcity" value="Новосибирск">Новосибирск</option>
@@ -599,7 +601,7 @@ if (count($arResult["ERRORS"]) > 0){
                     <label class="rus">Гостиница</label>
                     <label class="eng hidden">Hotel</label>
                     <select name="UF_LIVING_PLACE" class="select-large selecthotel">
-                        <option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
+                        <option value="<?=$arResult['VALUES']['UF_LIVING_PLACE']?>"><?=$arResult['VALUES']['UF_LIVING_PLACE']?></option>
                         <?foreach($HOTEL_RUS as $k => $v):?>
                             <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
@@ -611,18 +613,18 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label for="id6" class="rus">Дата прибытия</label>
                     <label for="id6" class="eng hidden">Arrival date</label>
-                    <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
+                    <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['VALUES']['UF_DATE_IN']?>" />
                 </div>
                 <div class="row">
                     <label for="id6" class="rus">Дата отъезда</label>
                     <label for="id6" class="eng hidden">Departure date</label>
-                    <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['arUser']['UF_DATE_OUT']?>" />
+                    <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['VALUES']['UF_DATE_OUT']?>" />
                 </div>
                 <div class="row">
                     <label for="id6" class="rus">Вид транспорта</label>
                     <label for="id6" class="eng hidden">Type of transport</label>
                     <select name="UF_TRANSPORT" class="select-large selecttransport">
-                        <option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
+                        <option value="<?=$arResult['VALUES']['UF_TRANSPORT']?>"><?=$arResult['VALUES']['UF_TRANSPORT']?></option>
                         <?foreach($TRANSPORT_RUS as $k => $v):?>
                             <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
@@ -876,6 +878,8 @@ if (count($arResult["ERRORS"]) > 0){
         $('#date').mask("99.99.9999");
         $('#date2').mask("99.99.9999");
 		$('#id11').mask("+7 (999) 999-99-99");
+        $('#PERSONAL_BIRTHDAY').mask("99.99.9999");
+
 
         // $.mask.definitions['A'] = "[A-Za-z]";
         // $("#surname_custom").mask("AAA");
@@ -906,8 +910,8 @@ if (count($arResult["ERRORS"]) > 0){
 		var err = 0;
 		var err_text = 'Вы не заполнили поля:<br/>';
         var err_text_en = 'You have not filled in the fields:<br/>';
-		var birthday = $('[name=d]').val() + '.' + $('[name=m]').val() + '.' + $('[name=y]').val();
-		$('#PERSONAL_BIRTHDAY').val(birthday);
+		// var birthday = $('[name=d]').val() + '.' + $('[name=m]').val() + '.' + $('[name=y]').val();
+		// $('#PERSONAL_BIRTHDAY').val(birthday);
         if($('[name=UF_DATE_IN]').val() == ''){
 			$('[name=UF_DATE_IN]').val('00.00.0000');
 		}
@@ -934,6 +938,22 @@ if (count($arResult["ERRORS"]) > 0){
 				err_text += '<br><a href="#id4">ФИО на латинском - Разрешены только англ. буквы</a>';
 			}
 		}
+        if($('[name=UF_GENDER]').val() == ''){
+            err++;
+            err_text += '<br><a href="#gender">Выберите пол из списка</a>';
+        }
+        if($('[name=UF_CAT1]').val() == ''){
+            err++;
+            err_text += '<br><a href="#UF_CAT1">Выберите категорию участника из списка</a>';
+        }
+        if($('[name=UF_REG_COUNTRY]').val() == ''){
+            err++;
+            err_text += '<br><a href="#country">Выберите страну из списка</a>';
+        }
+        if($('[name=UF_REGION]').val() == '' && $('[name=UF_REG_COUNTRY]').val() == 'Россия'){
+            err++;
+            err_text += '<br><a href="#UF_REGION">Выберите регион из списка</a>';
+        }
 		if($('[name=UF_COMPANY_EN]').val() != '' && $('[name=UF_COMPANY_EN]').val() != $('[name=UF_COMPANY_EN]').attr('err')){
 			var reg = /^[a-zA-Z0-9 .,'";/_:-]+$/;
 			if(!reg.test($('[name=UF_COMPANY_EN]').val())){
