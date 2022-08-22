@@ -419,24 +419,6 @@ if (count($arResult["ERRORS"]) > 0){
 				<div class="row">
 					<label for="id5" class="rus">Дата рождения</label>
                     <label for="id5" class="eng hidden"> Date of birth</label>
-<!--					<select name="d">-->
-<!--						<option></option>-->
-<!--						--><?//for($i=1;$i<32;$i++):?>
-<!--							<option value="--><?//if($i < 10)echo '0';?><!----><?//=$i?><!--">--><?//=$i?><!--</option>-->
-<!--						--><?//endfor?>
-<!--					</select>-->
-<!--					<select name='m'>-->
-<!--						<option></option>-->
-<!--						--><?//for($i=2;$i<14;$i++):?>
-<!--							<option value="--><?//if($i-1 < 10)echo '0';?><!----><?//=$i-1?><!--">--><?//=FormatDate("m",  mktime(0, 0, 0, $i  , 0, 2000));?><!--</option>-->
-<!--						--><?//endfor?>
-<!--					</select>-->
-<!--					<select name='y'>-->
-<!--						<option></option>-->
-<!--						--><?//for($i=date('Y');$i>1930;$i--):?>
-<!--							<option value="--><?//=$i?><!--">--><?//=$i?><!--</option>-->
-<!--						--><?//endfor?>
-<!--					</select>-->
 					<input id="PERSONAL_BIRTHDAY" type="text" name="REGISTER[PERSONAL_BIRTHDAY]" value="<?=$arResult["VALUES"]['PERSONAL_BIRTHDAY']?>" />
 				</div>
                 <div class="row">
@@ -748,11 +730,6 @@ if (count($arResult["ERRORS"]) > 0){
         });
     });
 
-    // $('#UF_CITY').on('input', function(){
-    //     let UF_CITY = $('#UF_CITY').val();
-    //     $('#UF_ADDRESS').val( UF_CITY + ', ');
-    //     elAlias: $('#UF_ADDRESS');
-    // });
 
     // Запрет ввода пробелов в ФИО
 
@@ -769,14 +746,13 @@ if (count($arResult["ERRORS"]) > 0){
     });
 
     $('body').on('input', '#id11', function(){
-        this.value = this.value.replace(/[^0-9+]/gi, '');
+        this.value = this.value.replace(/[^0-9+-/(/)]/gi, '');
     });
 
     let undo = $('.rusf')
 
     $('#enlang').click(function(){
         $('.rus').addClass('hidden').attr("hidden",true);
-        // $(".rusf").remove();
         $('.eng').removeClass('hidden').attr("hidden",false);
         $('.ruslangfield').attr("value","hidden");
         $('.englangfield').removeAttr("value");
@@ -785,7 +761,6 @@ if (count($arResult["ERRORS"]) > 0){
     $('#rulang').click(function(){
         $('.eng').addClass('hidden').attr("hidden",true);
         $('.rus').removeClass('hidden').attr("hidden",false);
-        // $('#placeholder').html(undo);
         $('.ruslangfield').removeAttr("value");
         $('.englangfield').attr("value","hidden");
     });
@@ -809,21 +784,7 @@ if (count($arResult["ERRORS"]) > 0){
             $(".scan").hide();
         };
     });
-    ///
-    // let cacheRusErr = $('.ruserr');
-    // let cacheEngErr = $('.engerr');
-    // $('.engcat').remove();
-    // $('.engcontry').remove();
-    // $('.engvac').remove();
-    // $('#enlang').click(function(){
-    //     cacheDomRuCat.remove();
-    //     $('.selectcat').append(cacheDomEnCat);
-    //     cacheDomRuContry.remove();
-    //     $('.selectcountry').append(cacheDomEnContry);
-    //     cacheDomRuVac.remove();
-    //     $('.vaccine').append(cacheDomEnVac);
-    // });
-    ///
+
     let cachePhoto = $('.photorow');
     $('[name=UF_CAT1]').change(function() {
         if($(this).find("option:selected").val() == "Региональные секции") {
@@ -853,9 +814,6 @@ if (count($arResult["ERRORS"]) > 0){
 			$('#idhide').hide();
 		}
 	});
-	// $('[name = tmp_mobile]').change(function(){
-	// 	$('#PERSONAL_MOBILE').val($('[name = tmp_mobile]').val().replace("+7", "8"));
-	// });
 
 	$("#id900").change(function(){
 		$(this).toggleClass('checked');
@@ -881,19 +839,7 @@ if (count($arResult["ERRORS"]) > 0){
 		$('#id23').mask("99.99.9999");
         $('#date').mask("99.99.9999");
         $('#date2').mask("99.99.9999");
-		// $('#id11').mask("+9 (999) 999-99-99");
         $('#PERSONAL_BIRTHDAY').mask("99.99.9999");
-
-
-        // $.mask.definitions['A'] = "[A-Za-z]";
-        // $("#surname_custom").mask("AAA");
-
-       
-
-        // let middle = $('#id11').val();
-		// $('#PERSONAL_MOBILE').val($('[name = tmp_mobile]').val());
-        //$('#PERSONAL_MOBILE').val($('#id11').val());
-		// .val().replace("+7", "8")
 	});
 	function isValidEmail (email, strict){
 		if ( !strict ) email = email.replace(/^s+|s+$/g, '');
