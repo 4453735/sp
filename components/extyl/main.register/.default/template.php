@@ -768,6 +768,10 @@ if (count($arResult["ERRORS"]) > 0){
         this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
     });
 
+    $('body').on('input', '#id11', function(){
+        this.value = this.value.replace(/[^0-9+]/gi, '');
+    });
+
     let undo = $('.rusf')
 
     $('#enlang').click(function(){
@@ -877,7 +881,7 @@ if (count($arResult["ERRORS"]) > 0){
 		$('#id23').mask("99.99.9999");
         $('#date').mask("99.99.9999");
         $('#date2').mask("99.99.9999");
-		$('#id11').mask("+7 (999) 999-99-99");
+		// $('#id11').mask("+9 (999) 999-99-99");
         $('#PERSONAL_BIRTHDAY').mask("99.99.9999");
 
 
