@@ -294,6 +294,30 @@ if($_POST['DATE_OUT']){
 						<option class="rusarrcity" value="Томск">Томск</option>
 					</select>
 				</span>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival date</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DATE_IN']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
+                        </span>
+                    </dd>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or arrival train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalFlight" name="UF_ARRIVAL_FLIGHT" value="<?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?>" />
+                        </span>
+                    </dd>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalTime" name="UF_ARRIVAL_INFO" value="<?=$arResult['arUser']['UF_ARRIVAL_INFO']?>" />
+                        </span>
+                    </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
@@ -306,21 +330,32 @@ if($_POST['DATE_OUT']){
 						</select>
                 </span>
                     </dd>
-                    <dt>Дата прибытия</dt>
-                    <dd>
-                        <span><?=$arResult['arUser']['UF_DATE_IN']?></span>
-                        <span class="hidden" style="width:240px">
-                            <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
-                        </span>
-                    </dd>
-                    <dt>Дата отъезда</dt>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата отъезда</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure date</dt>
                     <dd>
                         <span><?=$arResult['arUser']['UF_DATE_OUT']?></span>
                         <span class="hidden" style="width:240px">
                             <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['arUser']['UF_DATE_OUT']?>" />
                         </span>
                     </dd>
-                    <dt>Вид транспорта</dt>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or departure train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureFlight" name="UF_DEPARTURE_FLIGHT" value="<?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?>" />
+                        </span>
+                    </dd>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureTime" name="UF_DEPARTURE_INFO" value="<?=$arResult['arUser']['UF_DEPARTURE_INFO']?>" />
+                        </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Вид транспорта прибытия/убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Type of arrival/departure transport</dt>
                     <dd>
                         <span>
                             <?=$arResult['arUser']['UF_TRANSPORT']?>
@@ -550,6 +585,43 @@ if($_POST['DATE_OUT']){
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Проживание</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Accommodation</h3>
                 <dl class="personal-info">
+                
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Город прибытия:</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival city:</dt>
+				<dd><span><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></span>
+				<span class="hidden" style="width:240px">
+					<select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+						<option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
+						<option class="rusarrcity" value="Кемерово">Кемерово</option>
+						<option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
+						<option class="rusarrcity" value="Новосибирск">Новосибирск</option>
+						<option class="rusarrcity" value="Томск">Томск</option>
+					</select>
+				</span>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival date</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DATE_IN']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
+                        </span>
+                    </dd>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or arrival train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalFlight" name="UF_ARRIVAL_FLIGHT" value="<?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?>" />
+                        </span>
+                    </dd>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalTime" name="UF_ARRIVAL_INFO" value="<?=$arResult['arUser']['UF_ARRIVAL_INFO']?>" />
+                        </span>
+                    </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
@@ -560,36 +632,51 @@ if($_POST['DATE_OUT']){
                                 <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
-                </span>
+                		</span>
                     </dd>
-                    <dt>Дата прибытия</dt>
-                    <dd>
-                        <span><?=$arResult['arUser']['UF_DATE_IN']?></span>
-                        <span class="hidden" style="width:240px">
-                            <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
-                        </span>
-                    </dd>
-                    <dt>Дата отъезда</dt>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата отъезда</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure date</dt>
                     <dd>
                         <span><?=$arResult['arUser']['UF_DATE_OUT']?></span>
                         <span class="hidden" style="width:240px">
                             <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['arUser']['UF_DATE_OUT']?>" />
                         </span>
                     </dd>
-                    <dt>Вид транспорта</dt>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or departure train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureFlight" name="UF_DEPARTURE_FLIGHT" value="<?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?>" />
+                        </span>
+                    </dd>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureTime" name="UF_DEPARTURE_INFO" value="<?=$arResult['arUser']['UF_DEPARTURE_INFO']?>" />
+                        </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Вид транспорта прибытия/убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Type of arrival/departure transport</dt>
                     <dd>
                         <span>
                             <?=$arResult['arUser']['UF_TRANSPORT']?>
                         </span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_TRANSPORT" class="select-large">
+                        <select name="UF_TRANSPORT" class="select-large selecttransport">
 							<option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
-							<?foreach($TRANSPORT as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?foreach($TRANSPORT_RUS as $k => $v):?>
+                                <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <?endforeach;?>
+                            <?foreach($TRANSPORT_ENG as $k => $v):?>
+                                <option class="engtr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
-                </span>
+                		</span>
                     </dd>
+
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Контактная информация</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Contact Information</h3>
@@ -1072,6 +1159,8 @@ if($_POST['DATE_OUT']){
     jQuery(function($){
         $("#date").mask("99.99.9999");
         $("#date2").mask("99.99.9999");
+		$('#arrivalTime').mask("99:99");
+        $('#departureTime').mask("99:99");
     });
 
     $(document).ready(function(){

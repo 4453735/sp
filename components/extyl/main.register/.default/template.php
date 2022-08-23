@@ -580,6 +580,21 @@ if (count($arResult["ERRORS"]) > 0){
                     </select>
                 </div>
                 <div class="row">
+                    <label for="id6" class="rus">Дата прибытия</label>
+                    <label for="id6" class="eng hidden">Arrival date</label>
+                    <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['VALUES']['UF_DATE_IN']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Номер рейса или поезда прибытия</label>
+                    <label for="id6" class="eng hidden">Flight or arrival train number</label>
+                    <input type="text" id="arrivalFlight" name="UF_ARRIVAL_FLIGHT" value="<?=$arResult['VALUES']['UF_ARRIVAL_FLIGHT']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Время прибытия</label>
+                    <label for="id6" class="eng hidden">Arrival time</label>
+                    <input type="text" id="arrivalTime" name="UF_ARRIVAL_INFO" value="<?=$arResult['VALUES']['UF_ARRIVAL_INFO']?>" />
+                </div>
+                <div class="row">
                     <label class="rus">Гостиница</label>
                     <label class="eng hidden">Hotel</label>
                     <select name="UF_LIVING_PLACE" class="select-large selecthotel">
@@ -593,18 +608,23 @@ if (count($arResult["ERRORS"]) > 0){
                     </select>
                 </div>
                 <div class="row">
-                    <label for="id6" class="rus">Дата прибытия</label>
-                    <label for="id6" class="eng hidden">Arrival date</label>
-                    <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['VALUES']['UF_DATE_IN']?>" />
-                </div>
-                <div class="row">
                     <label for="id6" class="rus">Дата отъезда</label>
                     <label for="id6" class="eng hidden">Departure date</label>
                     <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['VALUES']['UF_DATE_OUT']?>" />
                 </div>
                 <div class="row">
-                    <label for="id6" class="rus">Вид транспорта</label>
-                    <label for="id6" class="eng hidden">Type of transport</label>
+                    <label for="id6" class="rus">Номер рейса или поезда убытия</label>
+                    <label for="id6" class="eng hidden">Flight or departure train number</label>
+                    <input type="text" id="departureFlight" name="UF_DEPARTURE_FLIGHT" value="<?=$arResult['VALUES']['UF_DEPARTURE_FLIGHT']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Время убытия</label>
+                    <label for="id6" class="eng hidden">Departure time</label>
+                    <input type="text" id="departureTime" name="UF_DEPARTURE_INFO" value="<?=$arResult['VALUES']['UF_DEPARTURE_INFO']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Вид транспорта прибытия/убытия</label>
+                    <label for="id6" class="eng hidden">Type of arrival/departure transport</label>
                     <select name="UF_TRANSPORT" class="select-large selecttransport">
                         <option value="<?=$arResult['VALUES']['UF_TRANSPORT']?>"><?=$arResult['VALUES']['UF_TRANSPORT']?></option>
                         <?foreach($TRANSPORT_RUS as $k => $v):?>
@@ -840,6 +860,8 @@ if (count($arResult["ERRORS"]) > 0){
         $('#date').mask("99.99.9999");
         $('#date2').mask("99.99.9999");
         $('#PERSONAL_BIRTHDAY').mask("99.99.9999");
+        $('#arrivalTime').mask("99:99");
+        $('#departureTime').mask("99:99");
 	});
 	function isValidEmail (email, strict){
 		if ( !strict ) email = email.replace(/^s+|s+$/g, '');
@@ -867,6 +889,18 @@ if (count($arResult["ERRORS"]) > 0){
 		}
         if($('[name=UF_DATE_OUT]').val() == ''){
 			$('[name=UF_DATE_OUT]').val('00.00.0000');
+		}
+        if($('[name=UF_ARRIVAL_FLIGHT]').val() == ''){
+			$('[name=UF_ARRIVAL_FLIGHT]').val('Заполню позже');
+		}
+        if($('[name=UF_DEPARTURE_FLIGHT]').val() == ''){
+			$('[name=UF_DEPARTURE_FLIGHT]').val('Заполню позже');
+		}
+        if($('[name=UF_ARRIVAL_INFO]').val() == ''){
+			$('[name=UF_ARRIVAL_INFO]').val('00:00');
+		}
+        if($('[name=UF_DEPARTURE_INFO]').val() == ''){
+			$('[name=UF_DEPARTURE_INFO]').val('00:00');
 		}
 		$('#step1 [type=text]').each(function(i){
 			if($(this).val()=='' || $(this).val() == $(this).attr('err')){
