@@ -424,10 +424,12 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
 					<label class="rus">Пол</label>
                     <label class="eng hidden">Gender</label>
-                    <select name="UF_GENDER" class="select-large selectarrcity" id="gender">
+                    <select name="UF_GENDER" class="select-large selectgen" id="gender">
                         <option value="<?=$arResult['VALUES']['UF_GENDER']?>"><?=$arResult['VALUES']['UF_GENDER']?></option>
-                        <option class="rusarrcity" value="Мужской">Мужской</option>
-                        <option class="rusarrcity" value="Женский">Женский</option>
+                        <option class="rus_gen" value="Мужской">Мужской</option>
+                        <option class="rus_gen" value="Женский">Женский</option>
+                        <option class="eng_gen" value="Male">Male</option>
+                        <option class="eng_gen" value="Female">Female</option>
                     </select>
 				</div>
                 <div class="row">
@@ -709,11 +711,14 @@ if (count($arResult["ERRORS"]) > 0){
         let cacheDomEnTr = $('.engtr');
         let cacheDomRuHotel = $('.rushotel');
         let cacheDomEnHotel = $('.enghotel');
+        let cacheDomRuGender = $('.rus_gen');
+        let cacheDomEnGender = $('.eng_gen');
         $('.engcat').remove();
         $('.engcontry').remove();
         $('.engvac').remove();
         $('.engtr').remove();
         $('.enghotel').remove();
+        $('.eng_gen').remove();
         $('#enlang').click(function(){
             cacheDomRuCat.remove();
             $('.selectcat').append(cacheDomEnCat);
@@ -725,6 +730,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selecttransport').append(cacheDomEnTr);
             cacheDomRuHotel.remove();
             $('.selecthotel').append(cacheDomEnHotel);
+            cacheDomRuGender.remove();
+            $('.selectgen').append(cacheDomEnGender);
         });
         $('#rulang').click(function(){
             cacheDomEnCat.remove();
@@ -737,6 +744,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selecttransport').append(cacheDomRuTr);
             cacheDomEnHotel.remove();
             $('.selecthotel').append(cacheDomRuHotel);
+            cacheDomEnGender.remove();
+            $('.selectgen').append(cacheDomRuGender);
         });
     });
 
@@ -891,16 +900,19 @@ if (count($arResult["ERRORS"]) > 0){
 			$('[name=UF_DATE_OUT]').val('00.00.0000');
 		}
         if($('[name=UF_ARRIVAL_FLIGHT]').val() == ''){
-			$('[name=UF_ARRIVAL_FLIGHT]').val('Заполню позже');
+			$('[name=UF_ARRIVAL_FLIGHT]').val('-');
 		}
         if($('[name=UF_DEPARTURE_FLIGHT]').val() == ''){
-			$('[name=UF_DEPARTURE_FLIGHT]').val('Заполню позже');
+			$('[name=UF_DEPARTURE_FLIGHT]').val('-');
 		}
         if($('[name=UF_ARRIVAL_INFO]').val() == ''){
 			$('[name=UF_ARRIVAL_INFO]').val('00:00');
 		}
         if($('[name=UF_DEPARTURE_INFO]').val() == ''){
 			$('[name=UF_DEPARTURE_INFO]').val('00:00');
+		}
+        if($('[name=UF_ADDRESS]').val() == ''){
+			$('[name=UF_ADDRESS]').val('-');
 		}
 		$('#step1 [type=text]').each(function(i){
 			if($(this).val()=='' || $(this).val() == $(this).attr('err')){
