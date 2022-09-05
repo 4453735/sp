@@ -59,6 +59,7 @@ function user_browser($agent) {
 CModule::IncludeModule("iblock");
 $CATEGORY1 = array();
 $COUNTRY_ARRAY_RU = array();
+$COUNTRY_ARRAY_EN = array();
 $SUBJECT_ARRAY = array();
 $CATEGORY_RUS = array();
 $CATEGORY_ENG = array();
@@ -110,14 +111,30 @@ while($ar_res = $res -> GetNext()){
     $COUNTRY_ARRAY_RU[$ar_res['PROPERTY_COUNTRY_ID_VALUE']] = $ar_res['NAME'];
 }
 
+$res = CIBlockElement::GetList(array('NAME'=>'ASC'),array("IBLOCK_ID" => 2, 'ACTIVE' => 'Y'), false, false, array('ID','NAME',"PROPERTY_country_id"));
+while($ar_res = $res -> GetNext()){
+    //$COUNTRY_ARRAY[$ar_res['PROPERTY_COUNTRY_ID_VALUE']] = $ar_res['NAME'];
+    $COUNTRY_ARRAY_EN[$ar_res['ID']] = $ar_res['NAME'];
+}
+
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
     $CATEGORY1[$ar_res['ID']] = $ar_res['NAME'];
 }
 
-$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'SECTION_ID' => false), false, array('ID','NAME'));
+// $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'SECTION_ID' => false), false, array('ID','NAME'));
+// while($ar_res = $res -> GetNext()){
+//     $HOTEL[$ar_res['ID']] = $ar_res['NAME'];
+// }
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
-    $HOTEL[$ar_res['ID']] = $ar_res['NAME'];
+    $HOTEL_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $HOTEL_ENG[$ar_res['ID']] = $ar_res['NAME'];
 }
 
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'SECTION_ID' => false), false, array('ID','NAME'));
@@ -236,10 +253,12 @@ if($_POST['DATE_OUT']){
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Gender:</dt>
                     <dd><span><?=$arResult['arUser']['UF_GENDER']?></span>
                         <span class="hidden" style="width:240px">
-							<select name="UF_GENDER" class="select-large selectarrcity">
+							<select name="UF_GENDER" class="select-large selectgen">
 								<option value="<?=$arResult['arUser']['UF_GENDER']?>"><?=$arResult['arUser']['UF_GENDER']?></option>
-								<option class="rusarrcity" value="Мужской">Мужской</option>
-								<option class="rusarrcity" value="Женский">Женский</option>
+								<option class="rus_gen" value="Мужской">Мужской</option>
+                        		<option class="rus_gen" value="Женский">Женский</option>
+                        		<option class="eng_gen" value="Male">Male</option>
+                        		<option class="eng_gen" value="Female">Female</option>
 							</select>
                			 </span>
                     </dd>
@@ -292,6 +311,10 @@ if($_POST['DATE_OUT']){
 						<option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
 						<option class="rusarrcity" value="Новосибирск">Новосибирск</option>
 						<option class="rusarrcity" value="Томск">Томск</option>
+						<option class="engarrcity" value="Kemerovo">Kemerovo</option>
+                        <option class="engarrcity" value="Novokuznetsk">Novokuznetsk</option>
+                        <option class="engarrcity" value="Novosibirsk">Novosibirsk</option>
+                        <option class="engarrcity" value="Tomsk">Tomsk</option>
 					</select>
 				</span>
 				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата прибытия</dt>
@@ -322,11 +345,14 @@ if($_POST['DATE_OUT']){
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_LIVING_PLACE" class="select-large">
+                        <select name="UF_LIVING_PLACE" class="select-large selecthotel">
 							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-							<?foreach($HOTEL as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
+							<?foreach($HOTEL_RUS as $k => $v):?>
+                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+							<?foreach($HOTEL_ENG as $k => $v):?>
+								<option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
 						</select>
                 </span>
                     </dd>
@@ -390,10 +416,13 @@ if($_POST['DATE_OUT']){
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Country:</dt>
                     <dd><span><?=$arResult['arUser']['UF_REG_COUNTRY']?></span>
                         <span class="hidden" style="width:240px">
-                         <select name="UF_REG_COUNTRY" class="select-large">
+                         <select name="UF_REG_COUNTRY" class="select-large selectcountry">
                              <option value="<?=$arResult['arUser']['UF_REG_COUNTRY']?>"><?=$arResult['arUser']['UF_REG_COUNTRY']?></option>
                         <?foreach($COUNTRY_ARRAY_RU as $k => $v):?>
-                            <option country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <option class="ruscontry" country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+						<?foreach($COUNTRY_ARRAY_EN as $k => $v):?>
+                            <option class="engcontry" country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
                     </select>
                 </span>
@@ -590,12 +619,16 @@ if($_POST['DATE_OUT']){
 				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival city:</dt>
 				<dd><span><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></span>
 				<span class="hidden" style="width:240px">
-					<select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+				<select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
 						<option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
 						<option class="rusarrcity" value="Кемерово">Кемерово</option>
 						<option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
 						<option class="rusarrcity" value="Новосибирск">Новосибирск</option>
 						<option class="rusarrcity" value="Томск">Томск</option>
+						<option class="engarrcity" value="Kemerovo">Kemerovo</option>
+                        <option class="engarrcity" value="Novokuznetsk">Novokuznetsk</option>
+                        <option class="engarrcity" value="Novosibirsk">Novosibirsk</option>
+                        <option class="engarrcity" value="Tomsk">Tomsk</option>
 					</select>
 				</span>
 				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата прибытия</dt>
@@ -626,11 +659,14 @@ if($_POST['DATE_OUT']){
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_LIVING_PLACE" class="select-large">
+                        <select name="UF_LIVING_PLACE" class="select-large selecthotel">
 							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-							<?foreach($HOTEL as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
+							<?foreach($HOTEL_RUS as $k => $v):?>
+                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+							<?foreach($HOTEL_ENG as $k => $v):?>
+								<option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
 						</select>
                 		</span>
                     </dd>
@@ -717,25 +753,25 @@ if($_POST['DATE_OUT']){
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место рождения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth place:</dt>
                     <dd>
-						<span><?=$arResult['arUser']['UF_BIRTH_PLACE']?></span>
+						<?=$arResult['arUser']['UF_BIRTH_PLACE']?>
 					</dd>
 
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна рождения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth country:</dt>
                     <dd>
-						<span><?=$arResult['arUser']['UF_BIRTH_COUNTRY']?></span>
+						<?=$arResult['arUser']['UF_BIRTH_COUNTRY']?>
 					</dd>
 
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гражданство:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Citizen:</dt>
                     <dd>
-						<span><?=$arResult['arUser']['UF_CITIZEN']?></span>
+						<?=$arResult['arUser']['UF_CITIZEN']?>
 					</dd>
 
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Тип документа, удостоверяющего личность:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Document type:</dt>
                     <dd>
-						<span><?=$arResult['arUser']['UF_DOCUMENT_TYPE']?></span>
+						<?=$arResult['arUser']['UF_DOCUMENT_TYPE']?>
 					</dd>
 
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Серия и номер паспорта:</dt>
@@ -747,13 +783,13 @@ if($_POST['DATE_OUT']){
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Issuing authority, date of issue and subdivision code:</dt>
                     <dd>
-						<span><?=$arResult['arUser']['UF_PASS_PLACE']?></span>
+						<?=$arResult['arUser']['UF_PASS_PLACE']?>
 					</dd>
 
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Адрес регистрации по месту жительства:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Address of registration at the place of residence:</dt>
                     <dd>
-						<span><?=$arResult['arUser']['UF_REG_ADDRESS']?></span>
+						<?=$arResult['arUser']['UF_REG_ADDRESS']?>
 					</dd>
 
                 </dl>
@@ -1170,6 +1206,14 @@ if($_POST['DATE_OUT']){
         let cacheDomEnCat = $('.engcat');
         let cacheDomRuTr = $('.rustr');
         let cacheDomEnTr = $('.engtr');
+		let cacheDomRuGender = $('.rus_gen');
+        let cacheDomEnGender = $('.eng_gen');
+        let cacheDomRuCityArr = $('.rusarrcity');
+        let cacheDomEnCityArr = $('.engarrcity');
+		let cacheDomRuContry = $('.ruscontry');
+        let cacheDomEnContry = $('.engcontry');
+		let cacheDomRuHotel = $('.rushotel');
+        let cacheDomEnHotel = $('.enghotel');
         let rusHidden = "<?=$arResult['arUser']['UF_RUS_LANG']?>";
         let engHidden = "<?=$arResult['arUser']['UF_ENG_LANG']?>";
 
@@ -1177,11 +1221,19 @@ if($_POST['DATE_OUT']){
             $('.rusvac').remove();
             $('.ruscat').remove();
             $('.rustr').remove();
+			$('.rus_gen').remove();
+			$('.rusarrcity').remove();
+			$('.ruscontry').remove();
+			$('.rushotel').remove();
         }
         if(engHidden == "hidden") {
             $('.engvac').remove();
             $('.engcat').remove();
             $('.engtr').remove();
+			$('.eng_gen').remove();
+			$('.engarrcity').remove();
+			$('.engcontry').remove();
+			$('.enghotel').remove();
         }
 
         $('#enlang').click(function(){
@@ -1193,6 +1245,14 @@ if($_POST['DATE_OUT']){
             $('.selectcat').append(cacheDomEnCat);
             cacheDomRuTr.remove();
             $('.selecttransport').append(cacheDomEnTr);
+			cacheDomRuGender.remove();
+            $('.selectgen').append(cacheDomEnGender);
+            cacheDomRuCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
+			cacheDomRuContry.remove();
+            $('.selectcountry').append(cacheDomEnContry);
+			cacheDomRuHotel.remove();
+            $('.selecthotel').append(cacheDomEnHotel);
         });
 
         $('#rulang').click(function(){
@@ -1204,6 +1264,14 @@ if($_POST['DATE_OUT']){
             $('.selectcat').append(cacheDomRuCat);
             cacheDomEnTr.remove();
             $('.selecttransport').append(cacheDomRuTr);
+			cacheDomEnGender.remove();
+            $('.selectgen').append(cacheDomRuGender);
+            cacheDomEnCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
+			cacheDomEnContry.remove();
+            $('.selectcountry').append(cacheDomRuContry);
+			cacheDomEnHotel.remove();
+            $('.selecthotel').append(cacheDomRuHotel);
         });
     });
 

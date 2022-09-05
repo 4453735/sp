@@ -528,7 +528,7 @@ qq.FileUploader = function(o){
         element: null,
         // if set, will be used instead of qq-upload-list in template
         listElement: null,
-        dragText: 'Загрузить',
+        dragText: '<span class="rus">Загрузить</span><span class="eng hidden">Upload</span>',
         uploadButtonText: 'Upload a file',
         cancelButtonText: 'Cancel',
         failUploadText: 'Upload failed',

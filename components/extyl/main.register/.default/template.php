@@ -497,27 +497,27 @@ if (count($arResult["ERRORS"]) > 0){
                 <div id="UF_BIRTH_PLACE" class="row">
 					<label for="id101" class="rus">Место рождения</label>
                     <label for="id101" class="eng hidden">Birth place</label>
-					<input name="UF_BIRTH_PLACE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_PLACE']?>" placeholder="Москва" id="id101">
+					<input name="UF_BIRTH_PLACE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_PLACE']?>" placeholder="" id="id101">
 				</div>
                 <div class="row">
                     <label for="id102" class="rus">Страна рождения</label>
                     <label for="id102" class="eng hidden">Birth country</label>
-                    <input name="UF_BIRTH_COUNTRY" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_COUNTRY']?>" placeholder="Россия" id="id102">
+                    <input name="UF_BIRTH_COUNTRY" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_COUNTRY']?>" placeholder="" id="id102">
 				</div>
                 <div class="row">
                     <label for="id103" class="rus">Гражданство</label>
                     <label for="id103" class="eng hidden">Citizen</label>
-                    <input name="UF_CITIZEN" type="text" class="text" value="<?=$arResult["VALUES"]['UF_CITIZEN']?>" placeholder="Россия" id="id103">
+                    <input name="UF_CITIZEN" type="text" class="text" value="<?=$arResult["VALUES"]['UF_CITIZEN']?>" placeholder="" id="id103">
 				</div>
                 <div class="row">
                     <label for="id104" class="rus">Тип документа, удостоверяющего личность </label>
                     <label for="id104" class="eng hidden">Document type</label>
-                    <input name="UF_DOCUMENT_TYPE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_DOCUMENT_TYPE']?>" placeholder="Паспорт РФ" id="id104">
+                    <input name="UF_DOCUMENT_TYPE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_DOCUMENT_TYPE']?>" placeholder="" id="id104">
 				</div>
                 <div class="row">
                     <label for="id15" class="rus">Серия и номер документа, удостоверяющего личность</label>
                     <label for="id15" class="eng hidden">Passport number</label>
-                    <input name='UF_PASSPORT' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASSPORT']?>" placeholder="00 00 000000" />
+                    <input name='UF_PASSPORT' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASSPORT']?>" placeholder="" />
                 </div>
                 <div class="row">
                     <label for="id105" class="rus">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения</label>
@@ -579,6 +579,10 @@ if (count($arResult["ERRORS"]) > 0){
                         <option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
                         <option class="rusarrcity" value="Новосибирск">Новосибирск</option>
                         <option class="rusarrcity" value="Томск">Томск</option>
+                        <option class="engarrcity" value="Kemerovo">Kemerovo</option>
+                        <option class="engarrcity" value="Novokuznetsk">Novokuznetsk</option>
+                        <option class="engarrcity" value="Novosibirsk">Novosibirsk</option>
+                        <option class="engarrcity" value="Tomsk">Tomsk</option>
                     </select>
                 </div>
                 <div class="row">
@@ -713,12 +717,15 @@ if (count($arResult["ERRORS"]) > 0){
         let cacheDomEnHotel = $('.enghotel');
         let cacheDomRuGender = $('.rus_gen');
         let cacheDomEnGender = $('.eng_gen');
+        let cacheDomRuCityArr = $('.rusarrcity');
+        let cacheDomEnCityArr = $('.engarrcity');
         $('.engcat').remove();
         $('.engcontry').remove();
         $('.engvac').remove();
         $('.engtr').remove();
         $('.enghotel').remove();
         $('.eng_gen').remove();
+        $('.engarrcity').remove();
         $('#enlang').click(function(){
             cacheDomRuCat.remove();
             $('.selectcat').append(cacheDomEnCat);
@@ -732,6 +739,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selecthotel').append(cacheDomEnHotel);
             cacheDomRuGender.remove();
             $('.selectgen').append(cacheDomEnGender);
+            cacheDomRuCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
         });
         $('#rulang').click(function(){
             cacheDomEnCat.remove();
@@ -746,6 +755,8 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selecthotel').append(cacheDomRuHotel);
             cacheDomEnGender.remove();
             $('.selectgen').append(cacheDomRuGender);
+            cacheDomEnCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
         });
     });
 
