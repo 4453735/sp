@@ -13,8 +13,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 		<?endforeach?>
 		
 		<div class="row">
+			<br>
 			<ul class="tabset">
-				<li><span style="font-size:20px"><strong>Регистрация закрыта / Registration is closed</strong></li>
+				 <li><span style="font-size:20px"><strong><a href="/register/">Регистрация / Registration</a></strong></li> 
 
 				<br><p>&nbsp;</p>
 				<li><b>Войти в личный кабинет</b></li>

@@ -38,6 +38,20 @@ $SUBJECT_ARRAY = array();
 $CATEGORY_RUS = array();
 $CATEGORY_ENG = array();
 $TRANSPORT = array();
+$TRANSPORT_RUS = array();
+$TRANSPORT_ENG = array();
+$HOTEL_RUS = array();
+$HOTEL_ENG = array();
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
 
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
@@ -60,27 +74,26 @@ while($ar_res = $res -> GetNext()){
     $COUNTRY_ARRAY_EN[$ar_res['ID']] = $ar_res['NAME'];
 }
 
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $HOTEL_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $HOTEL_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
 
 $res = CIBlockElement::GetList(array("NAME" => "ASC"),array("IBLOCK_ID" => 3), false, false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
 	$SUBJECT_ARRAY[] = $ar_res['NAME'];
 }
-//pr($SUBJECT_ARRAY);
 
-$res = CIBlockElement::GetList(array(),array("IBLOCK_ID" => 5), false, false, array('ID','NAME'));
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
-	$TRANSPORT[] = $ar_res['NAME'];
+    $TRANSPORT[$ar_res['ID']] = $ar_res['NAME'];
 }
 
-//$rsUsers = CUser::GetList($by, $order, array("SELECT" => array("UF_CAT1_SELECT")));
-//while ($rsUsers->GetNext())
-//{
-//    $rsGender = CUserFieldEnum::GetList(array(), array("ID" => $arUser["UF_CAT1_SELECT"]));
-//    if ($arCat = $rsGender->GetNext())
-//        $CATSELECT[] = $arCat["VALUE"];
-//}
-
-//Значения каталога
 
 
 $rsUser = CUser::GetList($by, $order,
@@ -145,6 +158,7 @@ if (count($arResult["ERRORS"]) > 0){
 				//$('#upload_photo').append('<input type="hidden"  name="file" value="' + src + '" />');
 				$('[name=file]').val(src);
 				$('#upload_photo').css('opacity','1.0');
+                // $('#upload_photo').append('.qq-upload-button');
 				release();
 				$('#upload_photo').css('opacity','1.0');
 				jcrop_api.destroy();
@@ -156,32 +170,6 @@ if (count($arResult["ERRORS"]) > 0){
 	});
 
 
-
-    // $('#user_photo').faceDetection({
-    //     complete: function (faces) {
-    //         console.log(faces);
-    //         console.log(faces[0]);
-    //         if (faces[0] == null) {
-    //             alert('На фото нет лица!');
-    //         }
-    //         for (var i = 0; i < faces.length; i++) {
-    //             $('<div>', {
-    //                 'class': 'face',
-    //                 'css': {
-    //                     'position': 'absolute',
-    //                     'left': faces[i].x * faces[i].scaleX + 'px',
-    //                     'top': faces[i].y * faces[i].scaleY + 'px',
-    //                     'width': faces[i].width * faces[i].scaleX + 'px',
-    //                     'height': faces[i].height * faces[i].scaleY + 'px'
-    //                 }
-    //             })
-    //                 .insertAfter(this);
-    //         }
-    //     },
-    //     error: function (code, message) {
-    //         alert('Error: ' + message);
-    //     }
-    // });
 
 
 
@@ -411,17 +399,17 @@ if (count($arResult["ERRORS"]) > 0){
                     <label for="surname_custom" class="rus ruserr">Фамилия</label>
                     <label for="surname_custom" class="eng hidden engerr">First Name</label>
                     </span>
-                    <input type="text" name="" class="text" value="" id="surname_custom">
+                    <input type="text" name="REGISTER[LAST_NAME]" class="text" value="<?=$arResult["VALUES"]['LAST_NAME']?>" id="surname_custom">
                 </div>
                 <div class="row">
                     <label for="name_custom" class="rus">Имя</label>
                     <label for="name_custom" class="eng hidden">Name</label>
-                    <input type="text" name="" class="text" value="" id="name_custom">
+                    <input type="text" name="REGISTER[NAME]" class="text" value="<?=$arResult["VALUES"]['NAME']?>" id="name_custom">
                 </div>
                 <div class="row">
                     <label for="middle_name_custom" class="rus">Отчество</label>
                     <label for="middle_name_custom" class="eng hidden">Middle name</label>
-                    <input name="" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" id="middle_name_custom">
+                    <input type="text" name="REGISTER[SECOND_NAME]" class="text" value="<?=$arResult["VALUES"]['SECOND_NAME']?>" id="middle_name_custom">
                 </div>
                 <input type="hidden" name="UF_FIO" class="text" value="<?=$arResult["VALUES"]['UF_FIO']?>" err="Иванов Иван Иванович" placeholder = "Иванов Иван Иванович" id="id3">
                 <div class="row rus">
@@ -431,30 +419,24 @@ if (count($arResult["ERRORS"]) > 0){
 				<div class="row">
 					<label for="id5" class="rus">Дата рождения</label>
                     <label for="id5" class="eng hidden"> Date of birth</label>
-					<select name="d">
-						<option></option>
-						<?for($i=1;$i<32;$i++):?>
-							<option value="<?if($i < 10)echo '0';?><?=$i?>"><?=$i?></option>
-						<?endfor?>
-					</select>
-					<select name='m'>
-						<option></option>
-						<?for($i=2;$i<14;$i++):?>
-							<option value="<?if($i-1 < 10)echo '0';?><?=$i-1?>"><?=FormatDate("m",  mktime(0, 0, 0, $i  , 0, 2000));?></option>
-						<?endfor?>
-					</select>
-					<select name='y'>
-						<option></option>
-						<?for($i=date('Y');$i>1930;$i--):?>
-							<option value="<?=$i?>"><?=$i?></option>
-						<?endfor?>
-					</select>
-					<input id="PERSONAL_BIRTHDAY" type="hidden" name="REGISTER[PERSONAL_BIRTHDAY]" />
+					<input id="PERSONAL_BIRTHDAY" type="text" name="REGISTER[PERSONAL_BIRTHDAY]" value="<?=$arResult["VALUES"]['PERSONAL_BIRTHDAY']?>" />
+				</div>
+                <div class="row">
+					<label class="rus">Пол</label>
+                    <label class="eng hidden">Gender</label>
+                    <select name="UF_GENDER" class="select-large selectgen" id="gender">
+                        <option value="<?=$arResult['VALUES']['UF_GENDER']?>"><?=$arResult['VALUES']['UF_GENDER']?></option>
+                        <option class="rus_gen" value="Мужской">Мужской</option>
+                        <option class="rus_gen" value="Женский">Женский</option>
+                        <option class="eng_gen" value="Male">Male</option>
+                        <option class="eng_gen" value="Female">Female</option>
+                    </select>
 				</div>
                 <div class="row">
                         <label id='UF_CAT1' class="rus">Категория участника</label>
                         <label id='UF_CAT1' class="eng hidden">Category</label>
                         <select name="UF_CAT1" class="select selectcat">
+                            <option value="<?=$arResult['VALUES']['UF_CAT1']?>"><?=$arResult['VALUES']['UF_CAT1']?></option>
 							<?foreach($CATEGORY_RUS as $k => $v):?>
 								<option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
 							<?endforeach;?>
@@ -462,9 +444,9 @@ if (count($arResult["ERRORS"]) > 0){
                                <option class="engcat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
-                    <select name="UF_CAT1_SELECT" class="select selectcat hidden">
+                    <select name="UF_CAT1_SELECT" class="select hidden">
                         <?foreach($CATSELECT as $k => $v):?>
-                            <option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <option class="rus_cat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
                     </select>
                 </div>
@@ -472,7 +454,7 @@ if (count($arResult["ERRORS"]) > 0){
                     <label for="id11" class="rus">Мобильный телефон</label>
                     <label for="id11" class="eng hidden">Phone</label>
                     <input name='tmp_mobile' type="text" class="text text-small" value="<?=$arResult["VALUES"]['PERSONAL_MOBILE']?>" id="id11" err="+79037147415">
-                    <input id="PERSONAL_MOBILE" name='REGISTER[PERSONAL_MOBILE]' type="hidden" class="text text-small" value="" />
+                    <input id="PERSONAL_MOBILE" name='REGISTER[PERSONAL_MOBILE]' type="hidden" class="text text-small" value="<?=$arResult["VALUES"]['PERSONAL_MOBILE']?>" />
                 </div>
                 <div class="row">
                     <label for="id10" class="rus">Электронная почта</label>
@@ -482,7 +464,8 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label class="rus">Страна</label>
                     <label class="eng hidden">Country</label>
-                    <select name="UF_REG_COUNTRY" class="select-large selectcountry" id="placeholder">
+                    <select name="UF_REG_COUNTRY" class="select-large selectcountry" id="country">
+                        <option value="<?=$arResult['VALUES']['UF_REG_COUNTRY']?>"><?=$arResult['VALUES']['UF_REG_COUNTRY']?></option>
                         <?foreach($COUNTRY_ARRAY as $k => $v):?>
                            <option class="ruscontry" country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                         <?endforeach;?>
@@ -494,7 +477,7 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row rus region">
                     <label for="id12" class="rus">Регион</label>
                     <select name="UF_REGION" class="select-large">
-                        <option value=""></option>
+                        <option value="<?=$arResult['VALUES']['UF_REGION']?>"><?=$arResult['VALUES']['UF_REGION']?></option>
                         <option value="Москва">Москва</option>
                         <option value="Санкт-Петербург">Санкт-Петербург</option>
                         <?foreach($SUBJECT_ARRAY as $k => $v):?>
@@ -511,10 +494,40 @@ if (count($arResult["ERRORS"]) > 0){
                     <label for="id15">Место проживания</label>
                     <input name='UF_ADDRESS' id="UF_ADDRESS" class="text" type="text" value="<?=$arResult["VALUES"]['UF_ADDRESS']?>" placeholder="" />
                 </div>
+                <div id="UF_BIRTH_PLACE" class="row">
+					<label for="id101" class="rus">Место рождения</label>
+                    <label for="id101" class="eng hidden">Birth place</label>
+					<input name="UF_BIRTH_PLACE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_PLACE']?>" placeholder="" id="id101">
+				</div>
                 <div class="row">
-                    <label for="id15" class="rus">Паспортные данные</label>
+                    <label for="id102" class="rus">Страна рождения</label>
+                    <label for="id102" class="eng hidden">Birth country</label>
+                    <input name="UF_BIRTH_COUNTRY" type="text" class="text" value="<?=$arResult["VALUES"]['UF_BIRTH_COUNTRY']?>" placeholder="" id="id102">
+				</div>
+                <div class="row">
+                    <label for="id103" class="rus">Гражданство</label>
+                    <label for="id103" class="eng hidden">Citizen</label>
+                    <input name="UF_CITIZEN" type="text" class="text" value="<?=$arResult["VALUES"]['UF_CITIZEN']?>" placeholder="" id="id103">
+				</div>
+                <div class="row">
+                    <label for="id104" class="rus">Тип документа, удостоверяющего личность </label>
+                    <label for="id104" class="eng hidden">Document type</label>
+                    <input name="UF_DOCUMENT_TYPE" type="text" class="text" value="<?=$arResult["VALUES"]['UF_DOCUMENT_TYPE']?>" placeholder="" id="id104">
+				</div>
+                <div class="row">
+                    <label for="id15" class="rus">Серия и номер документа, удостоверяющего личность</label>
                     <label for="id15" class="eng hidden">Passport number</label>
                     <input name='UF_PASSPORT' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASSPORT']?>" placeholder="" />
+                </div>
+                <div class="row">
+                    <label for="id105" class="rus">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения</label>
+                    <label for="id105" class="eng hidden">Issuing authority, date of issue and subdivision code</label>
+                    <input name='UF_PASS_PLACE' class="text" type="text" value="<?=$arResult["VALUES"]['UF_PASS_PLACE']?>" placeholder="" id="id105"/>
+                </div>
+                <div class="row">
+                    <label for="id106" class="rus">Адрес регистрации по месту жительства</label>
+                    <label for="id106" class="eng hidden">Address of registration at the place of residence</label>
+                    <input name='UF_REG_ADDRESS' class="text" type="text" value="<?=$arResult["VALUES"]['UF_REG_ADDRESS']?>" placeholder="" id="id106"/>
                 </div>
                 <div class="row">
                     <label for="id5" class="rus">Название организации</label>
@@ -545,43 +558,98 @@ if (count($arResult["ERRORS"]) > 0){
 
                         <?if(user_browser($_SERVER['HTTP_USER_AGENT']) != "IE 8.0"):?>
                             <input type="hidden"  name="file" value="" />
-<!--                            <button id="btn-start-camera" class="btn-photo">Сделать фото с веб-камеры</button>-->
                         <?else:?>
                             <input type="file" name="REGISTER_FILES_PERSONAL_PHOTO" />
                         <?endif?>
                     </div>
                 </div>
-<!--                <div class="row">-->
-<!--                    <label for="id19" class="rus">Статус о вакцинации от Covid-19</label>-->
-<!--                    <label for="id19" class="eng hidden">Vaccine Status</label>-->
-<!--                    <select name="UF_VACCINE" class="select-large vaccine">-->
-<!--                        <option class="engvac" value="Not vaccinated">Not vaccinated</option>-->
-<!--                        <option class="engvac" value="Scheduled">Scheduled</option>-->
-<!--                        <option class="engvac" value="1st Dose done">1st Dose done</option>-->
-<!--                        <option class="engvac" value="Completed Both Dose">Completed Both Dose</option>-->
-<!--                        <option class="rusvac" value="Не вакцинирован">Не вакцинирован</option>-->
-<!--                        <option class="rusvac" value="Запланирована">Запланирована</option>-->
-<!--                        <option class="rusvac" value="Первый этап вакцинации пройден">Первый этап вакцинации пройден</option>-->
-<!--                        <option class="rusvac" value="Вакцинирован">Вакцинирован</option>-->
-<!--                        <option class="rusvac" value="Справка о медицинском отводе от прививки">Справка о медицинском отводе от прививки</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <div class="row scan" style="display: none">-->
-<!--                    <label class="rus">Документ о вакцинации</label>-->
-<!--                    <label class="eng hidden">Attach the file</label>-->
-<!--                    <input type="file" name="UF_PASSPORT_SCAN" />-->
-<!--                </div>-->
                 <input type="hidden" class="ruslangfield" name="UF_RUS_LANG" type="text">
                 <input type="hidden" class="englangfield" name="UF_ENG_LANG" type="text" value="hidden">
+                <h3 class="info-block rus">Проживание</h3>
+                <h3 class="info-block eng hidden">Accommodation</h3>
+                <p class="rus">Можно заполнить позднее в личном кабинете.</p>
+                <p class="eng hidden">You can fill in later in your personal profile.</p>
+                <br>
+                <div class="row">
+                    <label class="rus">Город прибытия</label>
+                    <label class="eng hidden">Arrival city</label>
+                    <select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+                        <option value="<?=$arResult['VALUES']['UF_ARRIVAL_CITY']?>"><?=$arResult['VALUES']['UF_ARRIVAL_CITY']?></option>
+                        <option class="rusarrcity" value="Кемерово">Кемерово</option>
+                        <option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
+                        <option class="rusarrcity" value="Новосибирск">Новосибирск</option>
+                        <option class="rusarrcity" value="Томск">Томск</option>
+                        <option class="engarrcity" value="Kemerovo">Kemerovo</option>
+                        <option class="engarrcity" value="Novokuznetsk">Novokuznetsk</option>
+                        <option class="engarrcity" value="Novosibirsk">Novosibirsk</option>
+                        <option class="engarrcity" value="Tomsk">Tomsk</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Дата прибытия</label>
+                    <label for="id6" class="eng hidden">Arrival date</label>
+                    <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['VALUES']['UF_DATE_IN']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Номер рейса или поезда прибытия</label>
+                    <label for="id6" class="eng hidden">Flight or arrival train number</label>
+                    <input type="text" id="arrivalFlight" name="UF_ARRIVAL_FLIGHT" value="<?=$arResult['VALUES']['UF_ARRIVAL_FLIGHT']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Время прибытия</label>
+                    <label for="id6" class="eng hidden">Arrival time</label>
+                    <input type="text" id="arrivalTime" name="UF_ARRIVAL_INFO" value="<?=$arResult['VALUES']['UF_ARRIVAL_INFO']?>" />
+                </div>
+                <div class="row">
+                    <label class="rus">Гостиница</label>
+                    <label class="eng hidden">Hotel</label>
+                    <select name="UF_LIVING_PLACE" class="select-large selecthotel">
+                        <option value="<?=$arResult['VALUES']['UF_LIVING_PLACE']?>"><?=$arResult['VALUES']['UF_LIVING_PLACE']?></option>
+                        <?foreach($HOTEL_RUS as $k => $v):?>
+                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+                        <?foreach($HOTEL_ENG as $k => $v):?>
+                            <option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Дата отъезда</label>
+                    <label for="id6" class="eng hidden">Departure date</label>
+                    <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['VALUES']['UF_DATE_OUT']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Номер рейса или поезда убытия</label>
+                    <label for="id6" class="eng hidden">Flight or departure train number</label>
+                    <input type="text" id="departureFlight" name="UF_DEPARTURE_FLIGHT" value="<?=$arResult['VALUES']['UF_DEPARTURE_FLIGHT']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Время убытия</label>
+                    <label for="id6" class="eng hidden">Departure time</label>
+                    <input type="text" id="departureTime" name="UF_DEPARTURE_INFO" value="<?=$arResult['VALUES']['UF_DEPARTURE_INFO']?>" />
+                </div>
+                <div class="row">
+                    <label for="id6" class="rus">Вид транспорта прибытия/убытия</label>
+                    <label for="id6" class="eng hidden">Type of arrival/departure transport</label>
+                    <select name="UF_TRANSPORT" class="select-large selecttransport">
+                        <option value="<?=$arResult['VALUES']['UF_TRANSPORT']?>"><?=$arResult['VALUES']['UF_TRANSPORT']?></option>
+                        <?foreach($TRANSPORT_RUS as $k => $v):?>
+                            <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+                        <?foreach($TRANSPORT_ENG as $k => $v):?>
+                            <option class="engtr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                        <?endforeach;?>
+				    </select>
+                </div>
+
 
                 <div class="row">
                     <input type="checkbox" class="checkbox" id="id13">
                     <label class="fullwidth rus" for="id13">Согласен на обработку своих персональных данных в соответствии с <a href="/upload/privacy_policy.pdf" target="_blank">Политикой конфиденциальности</a>.</label>
-                    <label class="fullwidth eng hidden" for="id13">I agree to the processing of my personal data in accordance with the <a href="/upload/privacy_policy.pdf" target="_blank">Privacy Policy</a> and the <a href="/upload/privacy_policy_Tatarstan.pdf" target="_blank">Decision of the Cabinet of Ministers of the Republic of Tatarstan</a></label><br><br>
+                    <label class="fullwidth eng hidden" for="id13">I agree to the processing of my personal data in accordance with the <a href="/upload/privacy_policy.pdf" target="_blank">Privacy Policy</a>.</label><br><br>
                     <input id="UF_STATUS" name='UF_STATUS' type="hidden" class="text text-small" value="39" />
                 </div>
                 <div class="submit-wrap row">
-                    <!--					<input type="submit" class="submit halfwidth go-step3" value="Назад">-->
                     <input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check rus" value="Отправить заявку" disabled="disabled" />
                     <input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check eng hidden" value="Register" disabled="disabled" />
                     <input type="hidden" name="register_submit_button" class="submit" value="Завершить" />
@@ -592,36 +660,6 @@ if (count($arResult["ERRORS"]) > 0){
 				<div class="divider"></div>
 			</div>
 		</div>
-<!--		<div id="step4" class="step">-->
-<!--			<div class="form-box">-->
-<!--                <div class="row">-->
-<!--                        <input type="checkbox" class="checkbox" id="id13">-->
-<!--                        <label class="fullwidth" for="id13">Согласен на обработку своих персональных данных</label><br><br>-->
-<!--                        <div style="border: 1px solid #cfcfcf; border-radius: 2px; height: 110px; overflow: auto; padding: 0.6em 0.9em;">-->
-<!--                            В соответствии со статьей 9 Федерального закона от 27 июля 2006 года N 152-ФЗ "О персональных данных" даю своё согласие АНО «Форум «Спортивная Держава» (далее – Организатор) на обработку моих персональных данных Организатором в целях обеспечения безопасности для участия в Международном спортивном форуме «Россия – спортивная держава» (далее – Форум). <br><br>-->
-<!--                            Я согласен предоставить информацию, относящуюся к моей личности: фамилия, имя, отчество, дата рождения, контактный телефон, адрес e-mail, паспортные данные и место регистрации уполномоченным специализированным учреждениям безопасности РФ на период подготовки и проведения Форума и подтверждаю, что давая такое согласие, я действую своей волей и в своем интересе. <br><br>-->
-<!--                            Я уведомлен и понимаю, что под обработкой персональных данных подразумевается сбор, систематизация, накопление, хранение, уточнение (обновление, изменение), использование, распространение, уничтожение и любые другие действия в соответствии с действующим законодательством. Обработка данных может осуществляться с использованием средств автоматизации, так и без их использования (при неавтоматической обработке).-->
-<!--                        </div>-->
-<!--                </div>-->
-                <!--				<div class="row">-->
-                <!--					<div class="right-column">-->
-                <!--                        <input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check" value="Завершить" disabled='disabled' />-->
-                <!--						<input type="submit" class="submit fullwidth go-step2" value="Далее" disabled='disabled' />-->
-                <!--					</div>-->
-                <!--				</div>-->
-<!--                <div class="row">-->
-<!--                    <div class="right-column">-->
-<!--                        <span class="btn-note"></span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--				<div class="submit-wrap row">-->
-<!--					<input type="submit" class="submit halfwidth go-step3" value="Назад">-->
-<!--					<input id="register_submit_button" type="submit" name="register_submit_button" class="submit fullwidth check" value="Отправить заявку" disabled="disabled" />-->
-<!--					<input type="hidden" name="register_submit_button" class="submit" value="Завершить" />-->
-<!--					<span class="btn-note"></span>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
 	</fieldset>
 </form>
 
@@ -673,9 +711,21 @@ if (count($arResult["ERRORS"]) > 0){
         let cacheDomEnVac = $('.engvac');
         let cacheRusErr = $('.ruserr');
         let cacheEngErr = $('.engerr');
+        let cacheDomRuTr = $('.rustr');
+        let cacheDomEnTr = $('.engtr');
+        let cacheDomRuHotel = $('.rushotel');
+        let cacheDomEnHotel = $('.enghotel');
+        let cacheDomRuGender = $('.rus_gen');
+        let cacheDomEnGender = $('.eng_gen');
+        let cacheDomRuCityArr = $('.rusarrcity');
+        let cacheDomEnCityArr = $('.engarrcity');
         $('.engcat').remove();
         $('.engcontry').remove();
         $('.engvac').remove();
+        $('.engtr').remove();
+        $('.enghotel').remove();
+        $('.eng_gen').remove();
+        $('.engarrcity').remove();
         $('#enlang').click(function(){
             cacheDomRuCat.remove();
             $('.selectcat').append(cacheDomEnCat);
@@ -683,6 +733,14 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selectcountry').append(cacheDomEnContry);
             cacheDomRuVac.remove();
             $('.vaccine').append(cacheDomEnVac);
+            cacheDomRuTr.remove();
+            $('.selecttransport').append(cacheDomEnTr);
+            cacheDomRuHotel.remove();
+            $('.selecthotel').append(cacheDomEnHotel);
+            cacheDomRuGender.remove();
+            $('.selectgen').append(cacheDomEnGender);
+            cacheDomRuCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
         });
         $('#rulang').click(function(){
             cacheDomEnCat.remove();
@@ -691,6 +749,14 @@ if (count($arResult["ERRORS"]) > 0){
             $('.selectcountry').append(cacheDomRuContry);
             cacheDomEnVac.remove();
             $('.vaccine').append(cacheDomRuVac);
+            cacheDomEnTr.remove();
+            $('.selecttransport').append(cacheDomRuTr);
+            cacheDomEnHotel.remove();
+            $('.selecthotel').append(cacheDomRuHotel);
+            cacheDomEnGender.remove();
+            $('.selectgen').append(cacheDomRuGender);
+            cacheDomEnCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
         });
     });
 
@@ -704,17 +770,29 @@ if (count($arResult["ERRORS"]) > 0){
         });
     });
 
-    $('#UF_CITY').on('input', function(){
-        let UF_CITY = $('#UF_CITY').val();
-        $('#UF_ADDRESS').val( UF_CITY + ', ');
-        elAlias: $('#UF_ADDRESS');
+
+    // Запрет ввода пробелов в ФИО
+
+    $('body').on('input', '#surname_custom', function(){
+	    this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
+         });
+
+    $('body').on('input', '#name_custom', function(){
+        this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
+    });
+
+    $('body').on('input', '#middle_name_custom', function(){
+        this.value = this.value.replace(/[^a-zа-яё-]/gi, '');
+    });
+
+    $('body').on('input', '#id11', function(){
+        this.value = this.value.replace(/[^0-9+-/(/)]/gi, '');
     });
 
     let undo = $('.rusf')
 
     $('#enlang').click(function(){
         $('.rus').addClass('hidden').attr("hidden",true);
-        // $(".rusf").remove();
         $('.eng').removeClass('hidden').attr("hidden",false);
         $('.ruslangfield').attr("value","hidden");
         $('.englangfield').removeAttr("value");
@@ -723,7 +801,6 @@ if (count($arResult["ERRORS"]) > 0){
     $('#rulang').click(function(){
         $('.eng').addClass('hidden').attr("hidden",true);
         $('.rus').removeClass('hidden').attr("hidden",false);
-        // $('#placeholder').html(undo);
         $('.ruslangfield').removeAttr("value");
         $('.englangfield').attr("value","hidden");
     });
@@ -747,21 +824,7 @@ if (count($arResult["ERRORS"]) > 0){
             $(".scan").hide();
         };
     });
-    ///
-    // let cacheRusErr = $('.ruserr');
-    // let cacheEngErr = $('.engerr');
-    // $('.engcat').remove();
-    // $('.engcontry').remove();
-    // $('.engvac').remove();
-    // $('#enlang').click(function(){
-    //     cacheDomRuCat.remove();
-    //     $('.selectcat').append(cacheDomEnCat);
-    //     cacheDomRuContry.remove();
-    //     $('.selectcountry').append(cacheDomEnContry);
-    //     cacheDomRuVac.remove();
-    //     $('.vaccine').append(cacheDomEnVac);
-    // });
-    ///
+
     let cachePhoto = $('.photorow');
     $('[name=UF_CAT1]').change(function() {
         if($(this).find("option:selected").val() == "Региональные секции") {
@@ -791,9 +854,6 @@ if (count($arResult["ERRORS"]) > 0){
 			$('#idhide').hide();
 		}
 	});
-	// $('[name = tmp_mobile]').change(function(){
-	// 	$('#PERSONAL_MOBILE').val($('[name = tmp_mobile]').val().replace("+7", "8"));
-	// });
 
 	$("#id900").change(function(){
 		$(this).toggleClass('checked');
@@ -817,11 +877,11 @@ if (count($arResult["ERRORS"]) > 0){
 	$(document).ready(function () {
 		$("#show_popup").click();
 		$('#id23').mask("99.99.9999");
-		//$('#id11').mask("+99999999999");
-        // let middle = $('#id11').val();
-		// $('#PERSONAL_MOBILE').val($('[name = tmp_mobile]').val());
-        //$('#PERSONAL_MOBILE').val($('#id11').val());
-		// .val().replace("+7", "8")
+        $('#date').mask("99.99.9999");
+        $('#date2').mask("99.99.9999");
+        $('#PERSONAL_BIRTHDAY').mask("99.99.9999");
+        $('#arrivalTime').mask("99:99");
+        $('#departureTime').mask("99:99");
 	});
 	function isValidEmail (email, strict){
 		if ( !strict ) email = email.replace(/^s+|s+$/g, '');
@@ -842,8 +902,29 @@ if (count($arResult["ERRORS"]) > 0){
 		var err = 0;
 		var err_text = 'Вы не заполнили поля:<br/>';
         var err_text_en = 'You have not filled in the fields:<br/>';
-		var birthday = $('[name=d]').val() + '.' + $('[name=m]').val() + '.' + $('[name=y]').val();
-		$('#PERSONAL_BIRTHDAY').val(birthday);
+		// var birthday = $('[name=d]').val() + '.' + $('[name=m]').val() + '.' + $('[name=y]').val();
+		// $('#PERSONAL_BIRTHDAY').val(birthday);
+        if($('[name=UF_DATE_IN]').val() == ''){
+			$('[name=UF_DATE_IN]').val('00.00.0000');
+		}
+        if($('[name=UF_DATE_OUT]').val() == ''){
+			$('[name=UF_DATE_OUT]').val('00.00.0000');
+		}
+        if($('[name=UF_ARRIVAL_FLIGHT]').val() == ''){
+			$('[name=UF_ARRIVAL_FLIGHT]').val('-');
+		}
+        if($('[name=UF_DEPARTURE_FLIGHT]').val() == ''){
+			$('[name=UF_DEPARTURE_FLIGHT]').val('-');
+		}
+        if($('[name=UF_ARRIVAL_INFO]').val() == ''){
+			$('[name=UF_ARRIVAL_INFO]').val('00:00');
+		}
+        if($('[name=UF_DEPARTURE_INFO]').val() == ''){
+			$('[name=UF_DEPARTURE_INFO]').val('00:00');
+		}
+        if($('[name=UF_ADDRESS]').val() == ''){
+			$('[name=UF_ADDRESS]').val('-');
+		}
 		$('#step1 [type=text]').each(function(i){
 			if($(this).val()=='' || $(this).val() == $(this).attr('err')){
 				err++;
@@ -864,6 +945,22 @@ if (count($arResult["ERRORS"]) > 0){
 				err_text += '<br><a href="#id4">ФИО на латинском - Разрешены только англ. буквы</a>';
 			}
 		}
+        if($('[name=UF_GENDER]').val() == ''){
+            err++;
+            err_text += '<br><a href="#gender">Выберите пол из списка</a>';
+        }
+        if($('[name=UF_CAT1]').val() == ''){
+            err++;
+            err_text += '<br><a href="#UF_CAT1">Выберите категорию участника из списка</a>';
+        }
+        if($('[name=UF_REG_COUNTRY]').val() == ''){
+            err++;
+            err_text += '<br><a href="#country">Выберите страну из списка</a>';
+        }
+        if($('[name=UF_REGION]').val() == '' && $('[name=UF_REG_COUNTRY]').val() == 'Россия'){
+            err++;
+            err_text += '<br><a href="#UF_REGION">Выберите регион из списка</a>';
+        }
 		if($('[name=UF_COMPANY_EN]').val() != '' && $('[name=UF_COMPANY_EN]').val() != $('[name=UF_COMPANY_EN]').attr('err')){
 			var reg = /^[a-zA-Z0-9 .,'";/_:-]+$/;
 			if(!reg.test($('[name=UF_COMPANY_EN]').val())){

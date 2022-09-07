@@ -59,7 +59,13 @@ function user_browser($agent) {
 CModule::IncludeModule("iblock");
 $CATEGORY1 = array();
 $COUNTRY_ARRAY_RU = array();
+$COUNTRY_ARRAY_EN = array();
 $SUBJECT_ARRAY = array();
+$CATEGORY_RUS = array();
+$CATEGORY_ENG = array();
+$TRANSPORT_RUS = array();
+$TRANSPORT_ENG = array();
+
 
 global $USER;
 $arFilter = array("ID" => $USER->GetID());
@@ -75,6 +81,25 @@ if ($res = $arRes->Fetch()) {
     }
 }
 
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$TRANSPORT_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+	$CATEGORY_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $CATEGORY_ENG[$ar_res['ID']] = $ar_res['NAME'];
+}
 
 $res = CIBlockElement::GetList(array("NAME" => "ASC"),array("IBLOCK_ID" => 3), false, false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
@@ -86,14 +111,30 @@ while($ar_res = $res -> GetNext()){
     $COUNTRY_ARRAY_RU[$ar_res['PROPERTY_COUNTRY_ID_VALUE']] = $ar_res['NAME'];
 }
 
+$res = CIBlockElement::GetList(array('NAME'=>'ASC'),array("IBLOCK_ID" => 2, 'ACTIVE' => 'Y'), false, false, array('ID','NAME',"PROPERTY_country_id"));
+while($ar_res = $res -> GetNext()){
+    //$COUNTRY_ARRAY[$ar_res['PROPERTY_COUNTRY_ID_VALUE']] = $ar_res['NAME'];
+    $COUNTRY_ARRAY_EN[$ar_res['ID']] = $ar_res['NAME'];
+}
+
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
     $CATEGORY1[$ar_res['ID']] = $ar_res['NAME'];
 }
 
-$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'SECTION_ID' => false), false, array('ID','NAME'));
+// $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'SECTION_ID' => false), false, array('ID','NAME'));
+// while($ar_res = $res -> GetNext()){
+//     $HOTEL[$ar_res['ID']] = $ar_res['NAME'];
+// }
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
-    $HOTEL[$ar_res['ID']] = $ar_res['NAME'];
+    $HOTEL_RUS[$ar_res['ID']] = $ar_res['NAME'];
+}
+
+$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 6, 'ACTIVE' => 'N', 'SECTION_ID' => false), false, array('ID','NAME'));
+while($ar_res = $res -> GetNext()){
+    $HOTEL_ENG[$ar_res['ID']] = $ar_res['NAME'];
 }
 
 $res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 5, 'SECTION_ID' => false), false, array('ID','NAME'));
@@ -126,11 +167,6 @@ if($_POST['DATE_OUT']){
 ?>
 <ul class="side-nav">
 	<li class="active"><a data-element-id="item1" href="javascript:void(0)"><span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Личные данные</span><span class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Personal data</span></a></li>
-<!--	<li><a data-element-id="item2" href="javascript:void(0)">Проживание</a></li>-->
-<!--	<li><a data-element-id="item3" href="javascript:void(0)">Детали перелета</a></li>-->
-<!--	<li><a data-element-id="item4" href="javascript:void(0)">Проживание</a></li>-->
-	<?php /* <li><a data-element-id="item5" href="javascript:void(0)">Информация по Форуму</a></li> */?>
-	<?php /* <li><a data-element-id="item6" href="javascript:void(0)">Деловая программа Форума</a></li> */?>
 	<?if (array_key_exists('mospan', $_GET)):?>
 	<li><a data-element-id="item7" href="javascript:void(0)">Спортивные мероприятия</a></li>
 	<?endif?>
@@ -164,14 +200,9 @@ if($_POST['DATE_OUT']){
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Личное фото:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Personal photo:</dt>
                     <dd>
-                    <span>
                         <div class="image">
                             <?=$arResult['arUser']['PERSONAL_PHOTO_HTML']?>
                         </div>
-                    </span>
-                        <span class="hidden" style="width:240px">
-                            <input type="file" name="PERSONAL_PHOTO" value="<?=$arResult['arUser']['PERSONAL_PHOTO']?>" />
-                    </span>
                     </dd>
                     <dd>
 
@@ -180,50 +211,39 @@ if($_POST['DATE_OUT']){
                     <dd><?=$arResult['arUser']['ID']?></dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Фамилия:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Last name:</dt>
-                    <dd><span><?=$arResult['arUser']['LAST_NAME']?></span>
-                        <span class="hidden" style="width:240px">
-                        <input class="text" type="text" name="LAST_NAME" value="<?=$arResult['arUser']['LAST_NAME']?>" />
-                    </span>
+                    <dd>
+						<?=$arResult['arUser']['LAST_NAME']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Имя:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Name:</dt>
-                    <dd><span><?=$arResult['arUser']['NAME']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="NAME" value="<?=$arResult['arUser']['NAME']?>" />
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['NAME']?>    
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Отчество:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Middle name:</dt>
-                    <dd><span><?=$arResult['arUser']['SECOND_NAME']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="SECOND_NAME" value="<?=$arResult['arUser']['SECOND_NAME']?>" />
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['SECOND_NAME']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">ФИО на латинском:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Name on badge:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_FIO_EN']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_FIO_EN" value="<?=$arResult['arUser']['UF_FIO_EN']?>" />
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_FIO_EN']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата рождения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Date of birth:</dt>
-                    <dd><span><?=$arResult['arUser']['PERSONAL_BIRTHDAY']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="PERSONAL_BIRTHDAY" value="<?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>
                     </dd>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Пол:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Gender:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_GENDER']?>
+                    </dd>
+
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Категория участника:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Category:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_CAT1']?></span>
-                        <span class="hidden" style="width:240px">
-                        <select name="UF_CAT1" class="select-large">
-							<option value="<?=$arResult['arUser']['UF_CAT1']?>"><?=$arResult['arUser']['UF_CAT1']?></option>
-							<?foreach($CATEGORY1 as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
-						</select>
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_CAT1']?>
                     </dd>
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Информация об организации</h3>
@@ -231,58 +251,112 @@ if($_POST['DATE_OUT']){
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Организация:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Organization / Company:</dt>
-                    <dd><span><?=$arResult['arUser']['WORK_COMPANY']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="WORK_COMPANY" value="<?=$arResult['arUser']['WORK_COMPANY']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['WORK_COMPANY']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Должность:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Position:</dt>
-                    <dd><span><?=$arResult['arUser']['WORK_POSITION']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="WORK_POSITION" value="<?=$arResult['arUser']['WORK_POSITION']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['WORK_POSITION']?>
                     </dd>
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Проживание</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Accommodation</h3>
                 <dl class="personal-info">
-                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
-                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
-                        <span class="hidden" style="width:240px">
-                        <select name="UF_LIVING_PLACE" class="select-large">
-							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-							<?foreach($HOTEL as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
-						</select>
-                </span>
-                    </dd>
-                    <dt>Дата прибытия</dt>
+
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Город прибытия:</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival city:</dt>
+				<dd><span><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></span>
+				<span class="hidden" style="width:240px">
+					<select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+						<option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
+						<option class="rusarrcity" value="Кемерово">Кемерово</option>
+						<option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
+						<option class="rusarrcity" value="Новосибирск">Новосибирск</option>
+						<option class="rusarrcity" value="Томск">Томск</option>
+						<option class="engarrcity" value="Kemerovo">Kemerovo</option>
+                        <option class="engarrcity" value="Novokuznetsk">Novokuznetsk</option>
+                        <option class="engarrcity" value="Novosibirsk">Novosibirsk</option>
+                        <option class="engarrcity" value="Tomsk">Tomsk</option>
+					</select>
+				</span>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival date</dt>
                     <dd>
                         <span><?=$arResult['arUser']['UF_DATE_IN']?></span>
                         <span class="hidden" style="width:240px">
                             <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
                         </span>
                     </dd>
-                    <dt>Дата отъезда</dt>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or arrival train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalFlight" name="UF_ARRIVAL_FLIGHT" value="<?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?>" />
+                        </span>
+                    </dd>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalTime" name="UF_ARRIVAL_INFO" value="<?=$arResult['arUser']['UF_ARRIVAL_INFO']?>" />
+                        </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
+                        <span class="hidden" style="width:240px">
+                        <select name="UF_LIVING_PLACE" class="select-large selecthotel">
+							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
+							<?foreach($HOTEL_RUS as $k => $v):?>
+                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+							<?foreach($HOTEL_ENG as $k => $v):?>
+								<option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+						</select>
+                </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата отъезда</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure date</dt>
                     <dd>
                         <span><?=$arResult['arUser']['UF_DATE_OUT']?></span>
                         <span class="hidden" style="width:240px">
                             <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['arUser']['UF_DATE_OUT']?>" />
                         </span>
                     </dd>
-                    <dt>Вид транспорта</dt>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or departure train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureFlight" name="UF_DEPARTURE_FLIGHT" value="<?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?>" />
+                        </span>
+                    </dd>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureTime" name="UF_DEPARTURE_INFO" value="<?=$arResult['arUser']['UF_DEPARTURE_INFO']?>" />
+                        </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Вид транспорта прибытия/убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Type of arrival/departure transport</dt>
                     <dd>
                         <span>
                             <?=$arResult['arUser']['UF_TRANSPORT']?>
                         </span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_TRANSPORT" class="select-large">
+                        <select name="UF_TRANSPORT" class="select-large selecttransport">
 							<option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
-							<?foreach($TRANSPORT as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?foreach($TRANSPORT_RUS as $k => $v):?>
+                                <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <?endforeach;?>
+                            <?foreach($TRANSPORT_ENG as $k => $v):?>
+                                <option class="engtr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
                 </span>
@@ -293,102 +367,86 @@ if($_POST['DATE_OUT']){
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Электронная почта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">E-mail:</dt>
-                    <dd><?=$arResult['arUser']['EMAIL']?></dd>
+                    <dd>
+						<?=$arResult['arUser']['EMAIL']?>
+					</dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Мобильный телефон:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Mobile phone number:</dt>
-                    <dd><span><?=$arResult['arUser']['PERSONAL_MOBILE']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="PERSONAL_MOBILE" value="<?=$arResult['arUser']['PERSONAL_MOBILE']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['PERSONAL_MOBILE']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Country:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_REG_COUNTRY']?></span>
-                        <span class="hidden" style="width:240px">
-                         <select name="UF_REG_COUNTRY" class="select-large">
-                             <option value="<?=$arResult['arUser']['UF_REG_COUNTRY']?>"><?=$arResult['arUser']['UF_REG_COUNTRY']?></option>
-                        <?foreach($COUNTRY_ARRAY_RU as $k => $v):?>
-                            <option country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-                    </select>
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_REG_COUNTRY']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Регион:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Region:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_REGION']?></span>
-                        <span class="hidden" style="width:240px">
-                    <select name="UF_REGION" class="select-large">
-                        <option value="<?=$arResult['arUser']['UF_REGION']?>"><?=$arResult['arUser']['UF_REGION']?></option>
-                        <?foreach($SUBJECT_ARRAY as $k => $v):?>
-                            <option value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-                    </select>
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_REGION']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Город:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">City:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_CITY']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_CITY" value="<?=$arResult['arUser']['UF_CITY']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_CITY']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место проживания:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Place of residence:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_ADDRESS']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_ADDRESS" value="<?=$arResult['arUser']['UF_ADDRESS']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_ADDRESS']?>
                     </dd>
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Паспортные данные</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport information</h3>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth place:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_BIRTH_PLACE']?>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth country:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_BIRTH_COUNTRY']?>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гражданство:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Citizen:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_CITIZEN']?>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Тип документа, удостоверяющего личность:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Document type:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_DOCUMENT_TYPE']?>
+					</dd>
+				</dl>
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Серия и номер паспорта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport number:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_PASSPORT']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_PASSPORT" value="<?=$arResult['arUser']['UF_PASSPORT']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_PASSPORT']?>
                     </dd>
                 </dl>
-                <h3></h3>
-                <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации от Covid-19</h3>
-                <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Covid-19 vaccination status</h3>
-                <dl class="personal-info">
-                    <dd class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
-                        Для получения аккредитационного бейджа при себе необходимо иметь оригинал паспорта и справку об отрицательном ПЦР-тесте сроком действия не более 72 часов.
-                    </dd>
-                    <dd class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">
-                        To obtain an accreditation badge, you must have an original passport and a negative PCR test certificate valid for no more than 72 hours.
-                    </dd>
-                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации:</dt>
-                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Vaccine Status:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_VACCINE']?></span>
-                        <span class="hidden" style="width:240px">
-                <select name="UF_VACCINE" class="select-large vaccine">
-                        <option value="<?=$arResult['arUser']['UF_VACCINE']?>"><?=$arResult['arUser']['UF_VACCINE']?></option>
-                        <option class="engvac" value="Not vaccinated">Not vaccinated</option>
-                        <option class="engvac" value="Scheduled">Scheduled</option>
-                        <option class="engvac" value="1st Dose done">1st Dose done</option>
-                        <option class="engvac" value="Completed Both Dose">Completed Both Dose</option>
-                        <option class="rusvac" value="Не вакцинирован">Не вакцинирован</option>
-                        <option class="rusvac" value="Запланирована">Запланирована</option>
-                        <option class="rusvac" value="Первый этап вакцинации пройден">Первый этап вакцинации пройден</option>
-                        <option class="rusvac" value="Вакцинирован">Вакцинирован</option>
-                        <option class="rusvac" value="Справка о медицинском отводе от прививки">Справка о медицинском отводе от прививки</option>
-                    </select>
-            </span>
-                    </dd>
-                    <div class="scan" style="display: none">
-                        <dt>Документ о вакцинации</dt>
-                        <dd><input type="file" name="UF_PASSPORT_SCAN" /></dd>
-                    </div>
-                    <?if($arResult['arUser']['UF_PASSPORT_SCAN']):?>
-                        <dt>Документ о вакцинации</dt>
-                        <dd>Документ о вакцинации загружен</dd>
-                    <?endif?>
-                </dl>
-<!--                <input type="submit" class="submit hidden" name="save" value="--><?//=(($arResult["ID"]>0) ? GetMessage("MAIN_SAVE") : GetMessage("MAIN_ADD"))?><!--">-->
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Issuing authority, date of issue and subdivision code:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_PASS_PLACE']?>
+					</dd>
+				</dl>
+				<dl class="personal-info">
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Адрес регистрации по месту жительства:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Address of registration at the place of residence:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_REG_ADDRESS']?>
+					</dd>
+				</dl>
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
                     <input type="submit" class="submit hidden" name="save" value="Сохранить изменения">
                 </span>
@@ -415,14 +473,9 @@ if($_POST['DATE_OUT']){
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Личное фото:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Personal photo:</dt>
                     <dd>
-                    <span>
                         <div class="image">
                             <?=$arResult['arUser']['PERSONAL_PHOTO_HTML']?>
                         </div>
-                    </span>
-                        <span class="hidden" style="width:240px">
-                            <input type="file" name="PERSONAL_PHOTO" value="<?=$arResult['arUser']['PERSONAL_PHOTO']?>" />
-                    </span>
                     </dd>
                     <dd>
 
@@ -454,6 +507,13 @@ if($_POST['DATE_OUT']){
                     <dd>
                         <?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>
                     </dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Пол:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Gender:</dt>
+                    <dd>
+						<span><?=$arResult['arUser']['UF_GENDER']?></span>
+					</dd>
+
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Категория участника:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Category:</dt>
                     <dd>
@@ -477,46 +537,105 @@ if($_POST['DATE_OUT']){
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Проживание</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Accommodation</h3>
                 <dl class="personal-info">
-                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
-                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
-                        <span class="hidden" style="width:240px">
-                        <select name="UF_LIVING_PLACE" class="select-large">
-							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-							<?foreach($HOTEL as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
-						</select>
-                </span>
-                    </dd>
-                    <dt>Дата прибытия</dt>
+                
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Город прибытия:</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival city:</dt>
+				<dd><span><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></span>
+				<span class="hidden" style="width:240px">
+				<select name="UF_ARRIVAL_CITY" class="select-large selectarrcity">
+						<option value="<?=$arResult['arUser']['UF_ARRIVAL_CITY']?>"><?=$arResult['arUser']['UF_ARRIVAL_CITY']?></option>
+						<option class="rusarrcity" value="Кемерово">Кемерово</option>
+						<option class="rusarrcity" value="Новокузнецк">Новокузнецк</option>
+						<option class="rusarrcity" value="Новосибирск">Новосибирск</option>
+						<option class="rusarrcity" value="Томск">Томск</option>
+						<option class="engarrcity" value="Kemerovo">Kemerovo</option>
+                        <option class="engarrcity" value="Novokuznetsk">Novokuznetsk</option>
+                        <option class="engarrcity" value="Novosibirsk">Novosibirsk</option>
+                        <option class="engarrcity" value="Tomsk">Tomsk</option>
+					</select>
+				</span>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival date</dt>
                     <dd>
                         <span><?=$arResult['arUser']['UF_DATE_IN']?></span>
                         <span class="hidden" style="width:240px">
                             <input type="text" id="date" name="UF_DATE_IN" value="<?=$arResult['arUser']['UF_DATE_IN']?>" />
                         </span>
                     </dd>
-                    <dt>Дата отъезда</dt>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or arrival train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalFlight" name="UF_ARRIVAL_FLIGHT" value="<?=$arResult['arUser']['UF_ARRIVAL_FLIGHT']?>" />
+                        </span>
+                    </dd>
+				<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время прибытия</dt>
+				<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Arrival time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_ARRIVAL_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="arrivalTime" name="UF_ARRIVAL_INFO" value="<?=$arResult['arUser']['UF_ARRIVAL_INFO']?>" />
+                        </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
+                    <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
+                        <span class="hidden" style="width:240px">
+                        <select name="UF_LIVING_PLACE" class="select-large selecthotel">
+							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
+							<?foreach($HOTEL_RUS as $k => $v):?>
+                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+							<?foreach($HOTEL_ENG as $k => $v):?>
+								<option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?endforeach;?>
+						</select>
+                		</span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата отъезда</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure date</dt>
                     <dd>
                         <span><?=$arResult['arUser']['UF_DATE_OUT']?></span>
                         <span class="hidden" style="width:240px">
                             <input type="text" id="date2" name="UF_DATE_OUT" value="<?=$arResult['arUser']['UF_DATE_OUT']?>" />
                         </span>
                     </dd>
-                    <dt>Вид транспорта</dt>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Номер рейса или поезда убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Flight or departure train number</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureFlight" name="UF_DEPARTURE_FLIGHT" value="<?=$arResult['arUser']['UF_DEPARTURE_FLIGHT']?>" />
+                        </span>
+                    </dd>
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Время убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure time</dt>
+                    <dd>
+                        <span><?=$arResult['arUser']['UF_DEPARTURE_INFO']?></span>
+                        <span class="hidden" style="width:240px">
+                            <input type="text" id="departureTime" name="UF_DEPARTURE_INFO" value="<?=$arResult['arUser']['UF_DEPARTURE_INFO']?>" />
+                        </span>
+                    </dd>
+                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Вид транспорта прибытия/убытия</dt>
+					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Type of arrival/departure transport</dt>
                     <dd>
                         <span>
                             <?=$arResult['arUser']['UF_TRANSPORT']?>
                         </span>
                         <span class="hidden" style="width:240px">
-                        <select name="UF_TRANSPORT" class="select-large">
+                        <select name="UF_TRANSPORT" class="select-large selecttransport">
 							<option value="<?=$arResult['arUser']['UF_TRANSPORT']?>"><?=$arResult['arUser']['UF_TRANSPORT']?></option>
-							<?foreach($TRANSPORT as $k => $v):?>
-                                <option sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+							<?foreach($TRANSPORT_RUS as $k => $v):?>
+                                <option class="rustr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
+                            <?endforeach;?>
+                            <?foreach($TRANSPORT_ENG as $k => $v):?>
+                                <option class="engtr" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
                             <?endforeach;?>
 						</select>
-                </span>
+                		</span>
                     </dd>
+
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Контактная информация</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Contact Information</h3>
@@ -553,48 +672,51 @@ if($_POST['DATE_OUT']){
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Паспортные данные</h3>
                 <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport information</h3>
                 <dl class="personal-info">
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth place:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_BIRTH_PLACE']?>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна рождения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth country:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_BIRTH_COUNTRY']?>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гражданство:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Citizen:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_CITIZEN']?>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Тип документа, удостоверяющего личность:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Document type:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_DOCUMENT_TYPE']?>
+					</dd>
+
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Серия и номер паспорта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport number:</dt>
                     <dd>
                         <?=$arResult['arUser']['UF_PASSPORT']?>
                     </dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Issuing authority, date of issue and subdivision code:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_PASS_PLACE']?>
+					</dd>
+
+					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Адрес регистрации по месту жительства:</dt>
+                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Address of registration at the place of residence:</dt>
+                    <dd>
+						<?=$arResult['arUser']['UF_REG_ADDRESS']?>
+					</dd>
+
                 </dl>
-                <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации от Covid-19</h3>
-                <h3 class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Covid-19 vaccination status</h3>
-                <dl class="personal-info">
-                    <dd class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
-                        Для получения аккредитационного бейджа при себе необходимо иметь оригинал паспорта и справку об отрицательном ПЦР-тесте сроком действия не более 72 часов.
-                    </dd>
-                    <dd class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">
-                        To obtain an accreditation badge, you must have an original passport and a negative PCR test certificate valid for no more than 72 hours.
-                    </dd>
-                    <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Статус о вакцинации:</dt>
-                    <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Vaccine Status:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_VACCINE']?></span>
-                        <span class="hidden" style="width:240px">
-                 <select name="UF_VACCINE" class="select-large vaccine">
-                        <option value="<?=$arResult['arUser']['UF_VACCINE']?>"><?=$arResult['arUser']['UF_VACCINE']?></option>
-                        <option class="engvac" value="Not vaccinated">Not vaccinated</option>
-                        <option class="engvac" value="Scheduled">Scheduled</option>
-                        <option class="engvac" value="1st Dose done">1st Dose done</option>
-                        <option class="engvac" value="Completed Both Dose">Completed Both Dose</option>
-                        <option class="rusvac" value="Не вакцинирован">Не вакцинирован</option>
-                        <option class="rusvac" value="Запланирована">Запланирована</option>
-                        <option class="rusvac" value="Первый этап вакцинации пройден">Первый этап вакцинации пройден</option>
-                        <option class="rusvac" value="Вакцинирован">Вакцинирован</option>
-                        <option class="rusvac" value="Справка о медицинском отводе от прививки">Справка о медицинском отводе от прививки</option>
-                    </select>
-            </span>
-                    </dd>
-                    <div class="scan" style="display: none">
-                        <dt>Документ о вакцинации</dt>
-                        <dd><input type="file" name="UF_PASSPORT_SCAN" /></dd>
-                    </div>
-                    <?if($arResult['arUser']['UF_PASSPORT_SCAN']):?>
-                        <dt>Документ о вакцинации</dt>
-                        <dd>Документ о вакцинации загружен</dd>
-                    <?endif?>
-                </dl>
+
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
                     <input type="submit" class="submit hidden" name="save" value="Сохранить изменения">
                 </span>
@@ -996,19 +1118,45 @@ if($_POST['DATE_OUT']){
     jQuery(function($){
         $("#date").mask("99.99.9999");
         $("#date2").mask("99.99.9999");
+		$('#arrivalTime').mask("99:99");
+        $('#departureTime').mask("99:99");
     });
 
     $(document).ready(function(){
         let cacheDomRuVac = $('.rusvac');
         let cacheDomEnVac = $('.engvac');
+        let cacheDomRuCat = $('.ruscat');
+        let cacheDomEnCat = $('.engcat');
+        let cacheDomRuTr = $('.rustr');
+        let cacheDomEnTr = $('.engtr');
+		let cacheDomRuGender = $('.rus_gen');
+        let cacheDomEnGender = $('.eng_gen');
+        let cacheDomRuCityArr = $('.rusarrcity');
+        let cacheDomEnCityArr = $('.engarrcity');
+		let cacheDomRuContry = $('.ruscontry');
+        let cacheDomEnContry = $('.engcontry');
+		let cacheDomRuHotel = $('.rushotel');
+        let cacheDomEnHotel = $('.enghotel');
         let rusHidden = "<?=$arResult['arUser']['UF_RUS_LANG']?>";
         let engHidden = "<?=$arResult['arUser']['UF_ENG_LANG']?>";
 
         if(rusHidden == "hidden") {
             $('.rusvac').remove();
+            $('.ruscat').remove();
+            $('.rustr').remove();
+			$('.rus_gen').remove();
+			$('.rusarrcity').remove();
+			$('.ruscontry').remove();
+			$('.rushotel').remove();
         }
         if(engHidden == "hidden") {
             $('.engvac').remove();
+            $('.engcat').remove();
+            $('.engtr').remove();
+			$('.eng_gen').remove();
+			$('.engarrcity').remove();
+			$('.engcontry').remove();
+			$('.enghotel').remove();
         }
 
         $('#enlang').click(function(){
@@ -1016,6 +1164,18 @@ if($_POST['DATE_OUT']){
             $('.eng').removeClass('hidden');
             cacheDomRuVac.remove();
             $('.vaccine').append(cacheDomEnVac);
+            cacheDomRuCat.remove();
+            $('.selectcat').append(cacheDomEnCat);
+            cacheDomRuTr.remove();
+            $('.selecttransport').append(cacheDomEnTr);
+			cacheDomRuGender.remove();
+            $('.selectgen').append(cacheDomEnGender);
+            cacheDomRuCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
+			cacheDomRuContry.remove();
+            $('.selectcountry').append(cacheDomEnContry);
+			cacheDomRuHotel.remove();
+            $('.selecthotel').append(cacheDomEnHotel);
         });
 
         $('#rulang').click(function(){
@@ -1023,6 +1183,18 @@ if($_POST['DATE_OUT']){
             $('.rus').removeClass('hidden');
             cacheDomEnVac.remove();
             $('.vaccine').append(cacheDomRuVac);
+            cacheDomEnCat.remove();
+            $('.selectcat').append(cacheDomRuCat);
+            cacheDomEnTr.remove();
+            $('.selecttransport').append(cacheDomRuTr);
+			cacheDomEnGender.remove();
+            $('.selectgen').append(cacheDomRuGender);
+            cacheDomEnCityArr.remove();
+            $('.selectarrcity').append(cacheDomEnCityArr);
+			cacheDomEnContry.remove();
+            $('.selectcountry').append(cacheDomRuContry);
+			cacheDomEnHotel.remove();
+            $('.selecthotel').append(cacheDomRuHotel);
         });
     });
 
