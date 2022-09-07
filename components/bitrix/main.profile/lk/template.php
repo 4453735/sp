@@ -200,14 +200,9 @@ if($_POST['DATE_OUT']){
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Личное фото:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Personal photo:</dt>
                     <dd>
-                    <span>
                         <div class="image">
                             <?=$arResult['arUser']['PERSONAL_PHOTO_HTML']?>
                         </div>
-                    </span>
-                        <span class="hidden" style="width:240px">
-                            <input type="file" name="PERSONAL_PHOTO" value="<?=$arResult['arUser']['PERSONAL_PHOTO']?>" />
-                    </span>
                     </dd>
                     <dd>
 
@@ -216,67 +211,39 @@ if($_POST['DATE_OUT']){
                     <dd><?=$arResult['arUser']['ID']?></dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Фамилия:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Last name:</dt>
-                    <dd><span><?=$arResult['arUser']['LAST_NAME']?></span>
-                        <span class="hidden" style="width:240px">
-                        <input class="text" type="text" name="LAST_NAME" value="<?=$arResult['arUser']['LAST_NAME']?>" />
-                    </span>
+                    <dd>
+						<?=$arResult['arUser']['LAST_NAME']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Имя:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Name:</dt>
-                    <dd><span><?=$arResult['arUser']['NAME']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="NAME" value="<?=$arResult['arUser']['NAME']?>" />
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['NAME']?>    
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Отчество:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Middle name:</dt>
-                    <dd><span><?=$arResult['arUser']['SECOND_NAME']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="SECOND_NAME" value="<?=$arResult['arUser']['SECOND_NAME']?>" />
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['SECOND_NAME']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">ФИО на латинском:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Name on badge:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_FIO_EN']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_FIO_EN" value="<?=$arResult['arUser']['UF_FIO_EN']?>" />
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_FIO_EN']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата рождения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Date of birth:</dt>
-                    <dd><span><?=$arResult['arUser']['PERSONAL_BIRTHDAY']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="PERSONAL_BIRTHDAY" value="<?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['PERSONAL_BIRTHDAY']?>
                     </dd>
 					<dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Пол:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Gender:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_GENDER']?></span>
-                        <span class="hidden" style="width:240px">
-							<select name="UF_GENDER" class="select-large selectgen">
-								<option value="<?=$arResult['arUser']['UF_GENDER']?>"><?=$arResult['arUser']['UF_GENDER']?></option>
-								<option class="rus_gen" value="Мужской">Мужской</option>
-                        		<option class="rus_gen" value="Женский">Женский</option>
-                        		<option class="eng_gen" value="Male">Male</option>
-                        		<option class="eng_gen" value="Female">Female</option>
-							</select>
-               			 </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_GENDER']?>
                     </dd>
 
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Категория участника:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Category:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_CAT1']?></span>
-                        <span class="hidden" style="width:240px">
-                        <select name="UF_CAT1" class="select-large selectcat">
-							<option value="<?=$arResult['arUser']['UF_CAT1']?>"><?=$arResult['arUser']['UF_CAT1']?></option>
-                            <?foreach($CATEGORY_RUS as $k => $v):?>
-								<option class="ruscat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-							<?endforeach;?>
-                            <?foreach($CATEGORY_ENG as $k => $v):?>
-                               <option class="engcat" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                            <?endforeach;?>
-						</select>
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_CAT1']?>
                     </dd>
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Информация об организации</h3>
@@ -284,17 +251,13 @@ if($_POST['DATE_OUT']){
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Организация:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Organization / Company:</dt>
-                    <dd><span><?=$arResult['arUser']['WORK_COMPANY']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="WORK_COMPANY" value="<?=$arResult['arUser']['WORK_COMPANY']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['WORK_COMPANY']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Должность:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Position:</dt>
-                    <dd><span><?=$arResult['arUser']['WORK_POSITION']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="WORK_POSITION" value="<?=$arResult['arUser']['WORK_POSITION']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['WORK_POSITION']?>
                     </dd>
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Проживание</h3>
@@ -404,54 +367,33 @@ if($_POST['DATE_OUT']){
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Электронная почта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">E-mail:</dt>
-                    <dd><?=$arResult['arUser']['EMAIL']?></dd>
+                    <dd>
+						<?=$arResult['arUser']['EMAIL']?>
+					</dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Мобильный телефон:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Mobile phone number:</dt>
-                    <dd><span><?=$arResult['arUser']['PERSONAL_MOBILE']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="PERSONAL_MOBILE" value="<?=$arResult['arUser']['PERSONAL_MOBILE']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['PERSONAL_MOBILE']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Country:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_REG_COUNTRY']?></span>
-                        <span class="hidden" style="width:240px">
-                         <select name="UF_REG_COUNTRY" class="select-large selectcountry">
-                             <option value="<?=$arResult['arUser']['UF_REG_COUNTRY']?>"><?=$arResult['arUser']['UF_REG_COUNTRY']?></option>
-                        <?foreach($COUNTRY_ARRAY_RU as $k => $v):?>
-                            <option class="ruscontry" country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-						<?foreach($COUNTRY_ARRAY_EN as $k => $v):?>
-                            <option class="engcontry" country="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-                    </select>
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_REG_COUNTRY']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Регион:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Region:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_REGION']?></span>
-                        <span class="hidden" style="width:240px">
-                    <select name="UF_REGION" class="select-large">
-                        <option value="<?=$arResult['arUser']['UF_REGION']?>"><?=$arResult['arUser']['UF_REGION']?></option>
-                        <?foreach($SUBJECT_ARRAY as $k => $v):?>
-                            <option value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-                    </select>
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_REGION']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Город:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">City:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_CITY']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_CITY" value="<?=$arResult['arUser']['UF_CITY']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_CITY']?>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место проживания:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Place of residence:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_ADDRESS']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_ADDRESS" value="<?=$arResult['arUser']['UF_ADDRESS']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_ADDRESS']?>
                     </dd>
                 </dl>
                 <h3 class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Паспортные данные</h3>
@@ -459,64 +401,50 @@ if($_POST['DATE_OUT']){
 				<dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Место рождения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth place:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_BIRTH_PLACE']?></span>
-                        <span class="hidden" style="width:240px">
-                    		<input class="text" type="text" name="UF_BIRTH_PLACE" value="<?=$arResult['arUser']['UF_BIRTH_PLACE']?>">
-                		</span>
+                    <dd>
+						<?=$arResult['arUser']['UF_BIRTH_PLACE']?>
 					</dd>
 				</dl>
 				<dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Страна рождения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Birth country:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_BIRTH_COUNTRY']?></span>
-                        <span class="hidden" style="width:240px">
-                    		<input class="text" type="text" name="UF_BIRTH_COUNTRY" value="<?=$arResult['arUser']['UF_BIRTH_COUNTRY']?>">
-                		</span>
+                    <dd>
+						<?=$arResult['arUser']['UF_BIRTH_COUNTRY']?>
 					</dd>
 				</dl>
 				<dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гражданство:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Citizen:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_CITIZEN']?></span>
-                        <span class="hidden" style="width:240px">
-                    		<input class="text" type="text" name="UF_CITIZEN" value="<?=$arResult['arUser']['UF_CITIZEN']?>">
-                		</span>
+                    <dd>
+						<?=$arResult['arUser']['UF_CITIZEN']?>
 					</dd>
 				</dl>
 				<dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Тип документа, удостоверяющего личность:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Document type:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_DOCUMENT_TYPE']?></span>
-                        <span class="hidden" style="width:240px">
-                    		<input class="text" type="text" name="UF_DOCUMENT_TYPE" value="<?=$arResult['arUser']['UF_DOCUMENT_TYPE']?>">
-                		</span>
+                    <dd>
+						<?=$arResult['arUser']['UF_DOCUMENT_TYPE']?>
 					</dd>
 				</dl>
                 <dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Серия и номер паспорта:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Passport number:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_PASSPORT']?></span>
-                        <span class="hidden" style="width:240px">
-                    <input class="text" type="text" name="UF_PASSPORT" value="<?=$arResult['arUser']['UF_PASSPORT']?>">
-                </span>
+                    <dd>
+						<?=$arResult['arUser']['UF_PASSPORT']?>
                     </dd>
                 </dl>
 				<dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Орган, выдавший документ удостоверяющий личность, дата выдачи и код подразделения:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Issuing authority, date of issue and subdivision code:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_PASS_PLACE']?></span>
-                        <span class="hidden" style="width:240px">
-                    		<input class="text" type="text" name="UF_PASS_PLACE" value="<?=$arResult['arUser']['UF_PASS_PLACE']?>">
-                		</span>
+                    <dd>
+						<?=$arResult['arUser']['UF_PASS_PLACE']?>
 					</dd>
 				</dl>
 				<dl class="personal-info">
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Адрес регистрации по месту жительства:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Address of registration at the place of residence:</dt>
-                    <dd><span><?=$arResult['arUser']['UF_REG_ADDRESS']?></span>
-                        <span class="hidden" style="width:240px">
-                    		<input class="text" type="text" name="UF_REG_ADDRESS" value="<?=$arResult['arUser']['UF_REG_ADDRESS']?>">
-                		</span>
+                    <dd>
+						<?=$arResult['arUser']['UF_REG_ADDRESS']?>
 					</dd>
 				</dl>
                 <span class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">
@@ -545,14 +473,9 @@ if($_POST['DATE_OUT']){
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Личное фото:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Personal photo:</dt>
                     <dd>
-                    <span>
                         <div class="image">
                             <?=$arResult['arUser']['PERSONAL_PHOTO_HTML']?>
                         </div>
-                    </span>
-                        <span class="hidden" style="width:240px">
-                            <input type="file" name="PERSONAL_PHOTO" value="<?=$arResult['arUser']['PERSONAL_PHOTO']?>" />
-                    </span>
                     </dd>
                     <dd>
 
