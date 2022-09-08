@@ -307,17 +307,9 @@ if($_POST['DATE_OUT']){
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
-                        <span class="hidden" style="width:240px">
-                        <select name="UF_LIVING_PLACE" class="select-large selecthotel">
-							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-							<?foreach($HOTEL_RUS as $k => $v):?>
-                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-							<?endforeach;?>
-							<?foreach($HOTEL_ENG as $k => $v):?>
-								<option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-							<?endforeach;?>
-						</select>
-                </span>
+						<span class="hidden" style="width:240px">
+                            <input type="text" id="livingplace" name="UF_LIVING_PLACE" value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>" />
+                        </span>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата отъезда</dt>
 					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure date</dt>
@@ -581,17 +573,9 @@ if($_POST['DATE_OUT']){
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Гостиница:</dt>
                     <dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Hotel:</dt>
                     <dd><span><?=$arResult['arUser']['UF_LIVING_PLACE']?></span>
-                        <span class="hidden" style="width:240px">
-                        <select name="UF_LIVING_PLACE" class="select-large selecthotel">
-							<option value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>"><?=$arResult['arUser']['UF_LIVING_PLACE']?></option>
-							<?foreach($HOTEL_RUS as $k => $v):?>
-                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-							<?endforeach;?>
-							<?foreach($HOTEL_ENG as $k => $v):?>
-								<option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-							<?endforeach;?>
-						</select>
-                		</span>
+						<span class="hidden" style="width:240px">
+                            <input type="text" id="livingplace" name="UF_LIVING_PLACE" value="<?=$arResult['arUser']['UF_LIVING_PLACE']?>" />
+                        </span>
                     </dd>
                     <dt class="rus <?=$arResult['arUser']['UF_RUS_LANG']?>">Дата отъезда</dt>
 					<dt class="eng <?=$arResult['arUser']['UF_ENG_LANG']?>">Departure date</dt>

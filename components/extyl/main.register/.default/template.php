@@ -603,15 +603,7 @@ if (count($arResult["ERRORS"]) > 0){
                 <div class="row">
                     <label class="rus">Гостиница</label>
                     <label class="eng hidden">Hotel</label>
-                    <select name="UF_LIVING_PLACE" class="select-large selecthotel">
-                        <option value="<?=$arResult['VALUES']['UF_LIVING_PLACE']?>"><?=$arResult['VALUES']['UF_LIVING_PLACE']?></option>
-                        <?foreach($HOTEL_RUS as $k => $v):?>
-                            <option class="rushotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-                        <?foreach($HOTEL_ENG as $k => $v):?>
-                            <option class="enghotel" sect="<?=$k?>" value="<?=$v?>"><?=$v?></option>
-                        <?endforeach;?>
-                    </select>
+                    <input type="text" id="UF_LIVING_PLACE" name="UF_LIVING_PLACE" value="<?=$arResult['VALUES']['UF_LIVING_PLACE']?>" />
                 </div>
                 <div class="row">
                     <label for="id6" class="rus">Дата отъезда</label>
@@ -918,6 +910,9 @@ if (count($arResult["ERRORS"]) > 0){
 		}
         if($('[name=UF_ARRIVAL_INFO]').val() == ''){
 			$('[name=UF_ARRIVAL_INFO]').val('00:00');
+		}
+        if($('[name=UF_LIVING_PLACE]').val() == ''){
+			$('[name=UF_LIVING_PLACE]').val('-');
 		}
         if($('[name=UF_DEPARTURE_INFO]').val() == ''){
 			$('[name=UF_DEPARTURE_INFO]').val('00:00');
