@@ -53,7 +53,7 @@ while($ar_res = $res -> GetNext()){
 	$TRANSPORT_ENG[$ar_res['ID']] = $ar_res['NAME'];
 }
 
-$res = CIBlockSection::GetList(array(),array("IBLOCK_ID" => 4, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
+$res = CIBlockSection::GetList(array('SORT'=>'ASC'),array("IBLOCK_ID" => 4, 'ACTIVE' => 'Y', 'SECTION_ID' => false), false, array('ID','NAME'));
 while($ar_res = $res -> GetNext()){
 	$CATEGORY_RUS[$ar_res['ID']] = $ar_res['NAME'];
 }
